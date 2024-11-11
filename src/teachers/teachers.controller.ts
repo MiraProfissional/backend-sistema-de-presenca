@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { GetUsersParamDto } from './dtos/get-teacher-param.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { TeachersService } from './providers/teachers.service';
@@ -34,14 +44,19 @@ export class TeachersController {
   }
 
   @ApiOperation({
-    summary: 'Update a teacher user on the application',
+    summary: 'Delete a teacher user on the application',
   })
   @ApiResponse({
     status: 200,
-    description: 'Teachers updated successfully',
+    description: 'Teachers deleted successfully',
   })
   @Patch()
   public updateTeachers(@Body() updateTeacherDto: PatchTeacherDto) {
     return this.teachersService.updateTeacher(updateTeacherDto);
+  }
+
+  @Delete()
+  public deleteTeachers(@Query('id', ParseIntPipe) id: number) {
+    return this.teachersService.deleteTeacher(id);
   }
 }

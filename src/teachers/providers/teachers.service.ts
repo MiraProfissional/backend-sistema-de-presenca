@@ -149,4 +149,21 @@ export class TeachersService {
 
     return teacher;
   }
+
+  public async deleteTeacher(id: number) {
+    try {
+      // Deleting the post
+      await this.teacherRepository.delete(id);
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unbale to process your request at the moment, please try later.',
+        {
+          description: 'Error connecting to the database.',
+        },
+      );
+    }
+
+    // Confirmation
+    return { deleted: true, id };
+  }
 }
