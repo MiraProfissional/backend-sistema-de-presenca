@@ -22,7 +22,7 @@ async function bootstrap() {
   */
 
   const config = new DocumentBuilder()
-    .setTitle('NestJs Masterclass - Blog app API')
+    .setTitle('Sistema de presença')
     .setDescription('Use the base API URL as http://localhost:8000')
     .setTermsOfService('http://localhost:8000/terms-of-service')
     .setLicense(

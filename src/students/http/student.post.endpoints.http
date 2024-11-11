@@ -1,0 +1,11 @@
+POST http://localhost:8000/students
+Content-Type: application/json
+
+{
+    "name" : "Matheus Goncalves2",
+    "email":"MatheusGoncalves2@gmail.com",
+    "password":"!Matheus123",
+    "dateBirth": "2002-11-29T07:46:32+00:00",
+    "cpf": "11122233345",
+    "cellphone": "12987654321"
+}

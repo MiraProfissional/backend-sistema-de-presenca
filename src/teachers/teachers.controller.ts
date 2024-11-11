@@ -44,17 +44,24 @@ export class TeachersController {
   }
 
   @ApiOperation({
-    summary: 'Delete a teacher user on the application',
+    summary: 'Update a teacher user on the application',
   })
   @ApiResponse({
     status: 200,
-    description: 'Teachers deleted successfully',
+    description: 'Teachers updated successfully',
   })
   @Patch()
   public updateTeachers(@Body() updateTeacherDto: PatchTeacherDto) {
     return this.teachersService.updateTeacher(updateTeacherDto);
   }
 
+  @ApiOperation({
+    summary: 'Delete a teacher user on the application',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Teachers deleted successfully',
+  })
   @Delete()
   public deleteTeachers(@Query('id', ParseIntPipe) id: number) {
     return this.teachersService.deleteTeacher(id);
