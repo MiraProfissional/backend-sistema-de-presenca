@@ -6,6 +6,7 @@ import databaseConfig from './config/database.config';
 import environmentValidation from './config/environment.validation';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { TeachersModule } from './teachers/teachers.module';
 
 const ENV = process.env.NODE_ENV;
 
@@ -38,6 +39,7 @@ const ENV = process.env.NODE_ENV;
         database: configService.get('database.name'),
       }),
     }),
+    TeachersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
