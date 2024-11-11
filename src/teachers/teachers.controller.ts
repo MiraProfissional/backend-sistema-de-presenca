@@ -9,17 +9,24 @@ export class TeachersController {
   constructor(private readonly teachersService: TeachersService) {}
 
   @ApiOperation({
-    summary: 'Fetches a list of registered users on the application',
+    summary: 'Fetches a list of registered teachers on the application',
   })
   @ApiResponse({
     status: 200,
-    description: 'Users fetched successfully based on the query',
+    description: 'Teachers fetched successfully based on the query',
   })
   @Get('/:id?')
   public getTeachers(@Param() getUsersParamDto: GetUsersParamDto) {
     return this.teachersService.getTeachers(getUsersParamDto);
   }
 
+  @ApiOperation({
+    summary: 'Create a teacher user on the application',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Teachers created successfully',
+  })
   @Post()
   public createTeachers(@Body() createTeacherDto: CreateTeacherDto) {
     return this.teachersService.createTeacher(createTeacherDto);
