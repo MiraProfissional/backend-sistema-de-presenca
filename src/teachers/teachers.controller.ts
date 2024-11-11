@@ -1,7 +1,8 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { GetUsersParamDto } from './dtos/get-users-param.dto';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { GetUsersParamDto } from './dtos/get-teacher-param.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { TeachersService } from './providers/teachers.service';
+import { CreateTeacherDto } from './dtos/create-teacher.dto';
 
 @Controller('teachers')
 export class TeachersController {
@@ -17,5 +18,10 @@ export class TeachersController {
   @Get('/:id?')
   public getTeachers(@Param() getUsersParamDto: GetUsersParamDto) {
     return this.teachersService.getTeachers(getUsersParamDto);
+  }
+
+  @Post()
+  public createTeachers(@Body() createTeacherDto: CreateTeacherDto) {
+    return this.teachersService.createTeacher(createTeacherDto);
   }
 }
