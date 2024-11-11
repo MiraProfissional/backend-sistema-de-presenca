@@ -8,6 +8,7 @@ import { Repository } from 'typeorm';
 import { Teacher } from '../teacher.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateTeacherDto } from '../dtos/create-teacher.dto';
+import { PatchTeacherDto } from '../dtos/patch-teacher.dto';
 
 @Injectable()
 export class TeachersService {
@@ -103,5 +104,49 @@ export class TeachersService {
     }
 
     return newTeacher;
+  }
+
+  public async updateTeacher(patchTeacherDto: PatchTeacherDto) {
+    // Find the Teacher
+    let teacher = undefined;
+
+    try {
+      teacher = await this.teacherRepository.findOneBy({
+        id: patchTeacherDto.id,
+      });
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unbale to process your request at the moment, please try later.',
+        {
+          description: 'Error connecting to the database.',
+        },
+      );
+    }
+
+    if (!teacher) {
+      throw new BadRequestException('The post ID does not exist');
+    }
+
+    // Update the properties
+    teacher.name = patchTeacherDto.name ?? patchTeacherDto.name;
+    teacher.email = patchTeacherDto.email ?? patchTeacherDto.email;
+    teacher.password = patchTeacherDto.password ?? patchTeacherDto.password;
+    teacher.dateBirth = patchTeacherDto.dateBirth ?? patchTeacherDto.dateBirth;
+    teacher.cpf = patchTeacherDto.cpf ?? patchTeacherDto.cpf;
+    teacher.cellphone = patchTeacherDto.cellphone ?? patchTeacherDto.cellphone;
+
+    // Save the Teacher
+    try {
+      await this.teacherRepository.save(teacher);
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unbale to process your request at the moment, please try later.',
+        {
+          description: 'Error connecting to the database.',
+        },
+      );
+    }
+
+    return teacher;
   }
 }

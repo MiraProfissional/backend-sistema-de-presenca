@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { GetUsersParamDto } from './dtos/get-teacher-param.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { TeachersService } from './providers/teachers.service';
 import { CreateTeacherDto } from './dtos/create-teacher.dto';
+import { PatchTeacherDto } from './dtos/patch-teacher.dto';
 
 @Controller('teachers')
 export class TeachersController {
@@ -30,5 +31,17 @@ export class TeachersController {
   @Post()
   public createTeachers(@Body() createTeacherDto: CreateTeacherDto) {
     return this.teachersService.createTeacher(createTeacherDto);
+  }
+
+  @ApiOperation({
+    summary: 'Update a teacher user on the application',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Teachers updated successfully',
+  })
+  @Patch()
+  public updateTeachers(@Body() updateTeacherDto: PatchTeacherDto) {
+    return this.teachersService.updateTeacher(updateTeacherDto);
   }
 }
