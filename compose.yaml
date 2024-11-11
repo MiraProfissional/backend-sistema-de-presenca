@@ -1,0 +1,29 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: backend-presenca
+    environment:
+      - PORT=8000
+    ports:
+      - '8000:8000'
+    depends_on:
+      - postgres_db
+    volumes:
+      - ./src:/usr/src/app/src
+    env_file:
+      - .env
+
+  postgres_db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=sistemapresenca
+    container_name: db-presenca
+    volumes:
+      - ./pgdata_presenca:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'

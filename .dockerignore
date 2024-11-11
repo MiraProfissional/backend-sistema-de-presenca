@@ -1,0 +1,12 @@
+Dockerfile
+.dockerignore
+node_modules
+npm-debug.log
+dist
+README.md
+.prettierrc
+.gitignore
+.git
+test
+pgdata
+pgdata_presenca
