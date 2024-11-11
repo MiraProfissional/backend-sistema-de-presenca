@@ -24,13 +24,25 @@ export class TeachersService {
   }
 
   public async findAll() {
-    return true;
+    let teachers = undefined;
+
+    try {
+      teachers = await this.teacherRepository.find();
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unbale to process your request at the moment, please try later.',
+        {
+          description: 'Error connecting to the database.',
+        },
+      );
+    }
+    return teachers;
   }
 
   public async findOneById(id: number) {
-    let user = undefined;
+    let teacher = undefined;
     try {
-      user = await this.teacherRepository.findOneBy({
+      teacher = await this.teacherRepository.findOneBy({
         id,
       });
     } catch (error) {
@@ -42,12 +54,12 @@ export class TeachersService {
       );
     }
 
-    // Handle the user does not exist
-    if (!user) {
-      throw new BadRequestException('The user ID does not exist');
+    // Handle the teacher does not exist
+    if (!teacher) {
+      throw new BadRequestException('The teacher ID does not exist');
     }
 
-    return user;
+    return teacher;
   }
 
   public async createTeacher(createTeacherDto: CreateTeacherDto) {

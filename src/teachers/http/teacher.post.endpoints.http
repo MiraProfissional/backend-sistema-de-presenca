@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "name" : "Gustavo Gimenes",
-    "email":"GustavoGimenes@gmail.com",
+    "email":"GustavoGimenes3@gmail.com",
     "password":"Gust@vo123",
     "dateBirth": "2001-03-16T07:46:32+00:00",
     "cpf": "44455566678",
