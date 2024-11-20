@@ -1,7 +1,0 @@
-PATCH http://localhost:8000/students
-Content-Type: application/json
-
-{
-    "id": 1,
-    "email":"MatheusGoncalves1@gmail.com"
-}

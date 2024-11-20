@@ -6,8 +6,14 @@ import databaseConfig from './config/database.config';
 import environmentValidation from './config/environment.validation';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TeachersModule } from './teachers/teachers.module';
-import { StudentsModule } from './students/students.module';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { AuthenticationGuard } from './auth/guards/authentication/authentication.guard';
+import { APP_GUARD } from '@nestjs/core';
+import { AccessTokenGuard } from './auth/guards/access-token/access-token.guard';
+import jwtConfig from './auth/config/jwt.config';
+import { JwtModule } from '@nestjs/jwt';
+import { PaginationModule } from './common/pagination/pagination.module';
 
 const ENV = process.env.NODE_ENV;
 
@@ -40,10 +46,17 @@ const ENV = process.env.NODE_ENV;
         database: configService.get('database.name'),
       }),
     }),
-    TeachersModule,
-    StudentsModule,
+    UsersModule,
+    AuthModule,
+    PaginationModule,
+    ConfigModule.forFeature(jwtConfig),
+    JwtModule.registerAsync(jwtConfig.asProvider()),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    { provide: APP_GUARD, useClass: AuthenticationGuard },
+    AccessTokenGuard,
+  ],
 })
 export class AppModule {}

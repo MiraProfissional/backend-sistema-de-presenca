@@ -1,2 +1,0 @@
-DELETE http://localhost:8000/students/
-?id=2
