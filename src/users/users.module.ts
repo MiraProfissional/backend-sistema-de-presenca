@@ -28,6 +28,6 @@ import { DeleteUserByIdProvider } from './providers/delete-user-by-id.provider';
     TypeOrmModule.forFeature([User, Student, Teacher]),
     PaginationModule,
   ],
-  exports: [UsersService, FindOneUserByEmailProvider],
+  exports: [UsersService],
 })
 export class UsersModule {}

@@ -53,6 +53,10 @@ const ENV = process.env.NODE_ENV;
     JwtModule.registerAsync(jwtConfig.asProvider()),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    { provide: APP_GUARD, useClass: AuthenticationGuard },
+    AccessTokenGuard,
+  ],
 })
 export class AppModule {}
