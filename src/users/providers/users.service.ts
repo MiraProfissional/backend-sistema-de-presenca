@@ -25,6 +25,7 @@ import { DeleteUserByIdProvider } from './delete-user-by-id.provider';
 import { GetUsersQueryDto } from '../dtos/users/get-users-query.dto';
 import { Teacher } from '../entities/teacher.entity';
 import { Student } from '../entities/student.entity';
+import { DeleteUsersQueryDto } from '../dtos/users/delete-user.dto';
 
 /** Class to connect to Users table and perform business operations */
 @Injectable()
@@ -179,7 +180,9 @@ export class UsersService {
     return await this.patchUserProvider.updateUser(userType, patchUserDto);
   }
 
-  public async deleteUser(id: number) {
-    return await this.deleteUserByIdProvider.deleteUserById(id);
+  public async deleteUser(deleteUsersQueryDto: DeleteUsersQueryDto) {
+    return await this.deleteUserByIdProvider.deleteUserById(
+      deleteUsersQueryDto,
+    );
   }
 }

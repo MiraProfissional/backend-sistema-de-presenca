@@ -7,7 +7,6 @@ import {
   Body,
   Patch,
   Delete,
-  ParseIntPipe,
 } from '@nestjs/common';
 import { UsersService } from './providers/users.service';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -20,6 +19,7 @@ import { CreateStudentDto } from './dtos/students/create-student.dto';
 import { PatchStudentDto } from './dtos/students/patch-student.dto';
 import { UserType } from './enums/user-type.enum';
 import { GetUsersQueryDto } from './dtos/users/get-users-query.dto';
+import { DeleteUsersQueryDto } from './dtos/users/delete-user.dto';
 
 @Controller('users')
 @ApiTags('Users')
@@ -114,7 +114,7 @@ export class UsersController {
     description: 'User deleted successfully',
   })
   @Delete()
-  public deleteUser(@Query('id', ParseIntPipe) id: number) {
-    return this.usersService.deleteUser(id);
+  public deleteUser(@Query() deleteUsersQueryDto: DeleteUsersQueryDto) {
+    return this.usersService.deleteUser(deleteUsersQueryDto);
   }
 }
