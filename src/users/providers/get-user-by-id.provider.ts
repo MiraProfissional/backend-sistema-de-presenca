@@ -5,27 +5,49 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../entities/user.entity';
+import { UserType } from '../enums/user-type.enum';
+import { Teacher } from '../entities/teacher.entity';
+import { Student } from '../entities/student.entity';
 
 @Injectable()
 export class GetUserByIdProvider {
   constructor(
-    //Inject usersRepository
-    @InjectRepository(User)
-    private readonly usersRepository: Repository<User>,
+    /* 
+    Injecting teachersRepository
+    */
+    @InjectRepository(Teacher)
+    private readonly teachersRepository: Repository<Teacher>,
+
+    /* 
+    Injecting studentsRepository
+    */
+    @InjectRepository(Student)
+    private readonly studentsRepository: Repository<Student>,
   ) {}
 
-  public async getUserById(id: number) {
-    let user: User | undefined = undefined;
+  public async getUserById(id: number, userType: string) {
+    let user: Teacher | Student | undefined = undefined;
 
-    try {
-      user = await this.usersRepository.findOneBy({
-        id: id,
-      });
-    } catch (error) {
-      throw new RequestTimeoutException(error, {
-        description: 'Could not fetch the user',
-      });
+    if (userType == UserType.STUDENT) {
+      try {
+        user = await this.studentsRepository.findOneBy({
+          id: id,
+        });
+      } catch (error) {
+        throw new RequestTimeoutException(error, {
+          description: 'Could not fetch the student user',
+        });
+      }
+    } else {
+      try {
+        user = await this.teachersRepository.findOneBy({
+          id: id,
+        });
+      } catch (error) {
+        throw new RequestTimeoutException(error, {
+          description: 'Could not fetch the teacher user',
+        });
+      }
     }
 
     if (!user) {

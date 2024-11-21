@@ -11,13 +11,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateStudentDto } from '../dtos/students/create-student.dto';
 import { CreateTeacherDto } from '../dtos/teachers/create-teacher.dto';
 import { UserType } from '../enums/user-type.enum';
-import { User } from '../entities/user.entity';
+import { Student } from '../entities/student.entity';
+import { Teacher } from '../entities/teacher.entity';
 
 @Injectable()
 export class CreateUserProvider {
   constructor(
-    @InjectRepository(User)
-    private readonly usersRepository: Repository<User>,
+    @InjectRepository(Student)
+    private readonly studentRepository: Repository<Student>,
+
+    @InjectRepository(Teacher)
+    private readonly teacherRepository: Repository<Teacher>,
 
     //Inject hashingProvider
     @Inject(forwardRef(() => HashingProvider))
@@ -27,15 +31,19 @@ export class CreateUserProvider {
   public async createUser(
     userType: UserType,
     createUserDto: CreateStudentDto | CreateTeacherDto,
-  ): Promise<User> {
+  ): Promise<Student | Teacher> {
     let existingUser = undefined;
 
-    console.log('userType:', userType);
-
     try {
-      existingUser = await this.usersRepository.findOne({
-        where: { email: createUserDto.email },
-      });
+      if (userType === UserType.STUDENT) {
+        existingUser = await this.studentRepository.findOne({
+          where: { email: createUserDto.email },
+        });
+      } else if (userType === UserType.TEACHER) {
+        existingUser = await this.teacherRepository.findOne({
+          where: { email: createUserDto.email },
+        });
+      }
     } catch {
       throw new RequestTimeoutException(
         'Unable to process your request at the moment, please try later.',
@@ -49,24 +57,26 @@ export class CreateUserProvider {
       );
     }
 
-    const newUser = this.usersRepository.create({
-      ...createUserDto,
-      type: userType,
-      password: await this.hashingProvider.hashPassword(createUserDto.password),
-    });
+    let newUser: Student | Teacher;
 
-    console.log('Dados antes do save:', newUser);
-
-    try {
-      const result = await this.usersRepository.save(newUser);
-      console.log('Usuário salvo:', result);
-      return result;
-    } catch (error) {
-      console.error('Erro ao salvar usuário:', error);
-      throw new RequestTimeoutException(
-        'Unable to process your request at the moment, please try later.',
-        { description: 'Error connecting to the database.' },
-      );
+    if (userType === UserType.STUDENT) {
+      newUser = this.studentRepository.create({
+        ...createUserDto,
+        password: await this.hashingProvider.hashPassword(
+          createUserDto.password,
+        ),
+      });
+      return this.studentRepository.save(newUser);
+    } else if (userType === UserType.TEACHER) {
+      newUser = this.teacherRepository.create({
+        ...createUserDto,
+        password: await this.hashingProvider.hashPassword(
+          createUserDto.password,
+        ),
+      });
+      return this.teacherRepository.save(newUser);
+    } else {
+      throw new BadRequestException('Invalid user type.');
     }
   }
 }

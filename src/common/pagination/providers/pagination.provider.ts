@@ -4,7 +4,9 @@ import { ObjectLiteral, Repository } from 'typeorm';
 import { Request } from 'express';
 import { REQUEST } from '@nestjs/core';
 import { Paginated } from '../interfaces/paginated.interface';
-import { UserType } from 'src/users/enums/user-type.enum';
+import { Teacher } from 'src/users/entities/teacher.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Student } from 'src/users/entities/student.entity';
 import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
@@ -13,6 +15,18 @@ export class PaginationProvider {
     // Injecting request
     @Inject(REQUEST)
     private readonly request: Request,
+
+    /* 
+    Injecting teachersRepository
+    */
+    @InjectRepository(Teacher)
+    private readonly teachersRepository: Repository<Teacher>,
+
+    /* 
+    Injecting studentsRepository
+    */
+    @InjectRepository(Student)
+    private readonly studentsRepository: Repository<Student>,
   ) {}
 
   public async paginateQuery<T extends ObjectLiteral>(
@@ -62,19 +76,20 @@ export class PaginationProvider {
     return finalResponse;
   }
 
-  public async paginateQueryForUsers(
+  public async paginateQueryAllUsers(
     paginationQuery: PaginationQueryDto,
-    repository: Repository<User>,
-    userType: UserType,
   ): Promise<Paginated<User>> {
-    const results = await repository.find({
-      where: {
-        type: userType,
-      },
+    const teachers = await this.teachersRepository.find({
       skip: (paginationQuery.page - 1) * paginationQuery.limit,
       take: paginationQuery.limit,
     });
 
+    const students = await this.studentsRepository.find({
+      skip: (paginationQuery.page - 1) * paginationQuery.limit,
+      take: paginationQuery.limit,
+    });
+
+    const allUsers = [...teachers, ...students];
     // Create de request URLs
     const baseURL =
       this.request.protocol + '://' + this.request.headers.host + '/';
@@ -82,7 +97,9 @@ export class PaginationProvider {
     const newURL = new URL(this.request.url, baseURL);
 
     // Calculating the page numbers
-    const totalItems = await repository.count();
+    const totalItems =
+      (await this.studentsRepository.count()) +
+      (await this.teachersRepository.count());
     const totalPages = Math.ceil(totalItems / paginationQuery.limit);
     const nextPage =
       paginationQuery.page == totalPages
@@ -94,7 +111,7 @@ export class PaginationProvider {
         : paginationQuery.page - 1;
 
     const finalResponse: Paginated<User> = {
-      data: results,
+      data: allUsers,
       meta: {
         itemsPerPage: paginationQuery.limit,
         totalItems: totalItems,

@@ -41,8 +41,6 @@ export class SignInProvider {
       user.password,
     );
 
-    console.log(isEqual);
-
     if (!isEqual) {
       throw new UnauthorizedException('Incorrect Password');
     }

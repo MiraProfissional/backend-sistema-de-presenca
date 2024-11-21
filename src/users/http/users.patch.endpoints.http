@@ -2,6 +2,6 @@ PATCH http://localhost:8000/users/professores
 Content-Type: application/json
 
 {
-    "id": 19,
-    "email":"johndoe@email.com"
+    "id": 24,
+    "email":"johndoetest@email.com"
 }

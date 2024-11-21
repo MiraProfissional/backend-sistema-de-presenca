@@ -9,16 +9,26 @@ import { PatchTeacherDto } from '../dtos/teachers/patch-teacher.dto';
 import { PatchStudentDto } from '../dtos/students/patch-student.dto';
 import { UserType } from '../enums/user-type.enum';
 import { Repository } from 'typeorm';
+import { Teacher } from '../entities/teacher.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Student } from '../entities/student.entity';
 import { HashingProvider } from 'src/auth/providers/hashing.provider';
 import { User } from '../entities/user.entity';
 
 @Injectable()
 export class PatchUserProvider {
   constructor(
-    //Injecting usersRepository
+    //Injecting teacherRepository
     @InjectRepository(User)
-    private readonly usersRepository: Repository<User>,
+    private readonly userRepository: Repository<User>,
+
+    //Injecting teacherRepository
+    @InjectRepository(Teacher)
+    private readonly teacherRepository: Repository<Teacher>,
+
+    //Injecting studentRepository
+    @InjectRepository(Student)
+    private readonly studentRepository: Repository<Student>,
 
     //Inject hashingProvider
     @Inject(forwardRef(() => HashingProvider))
@@ -32,7 +42,7 @@ export class PatchUserProvider {
     let user = undefined;
 
     try {
-      user = await this.usersRepository.findOne({
+      user = await this.userRepository.findOne({
         where: { id: patchUserDto.id },
       });
     } catch {
@@ -66,7 +76,7 @@ export class PatchUserProvider {
       user.course = (patchUserDto as PatchStudentDto).course ?? user.course;
 
       try {
-        await this.usersRepository.save(user);
+        await this.studentRepository.save(user);
       } catch (error) {
         throw new RequestTimeoutException(error, {
           description: 'Error connecting to the database.',
@@ -77,7 +87,7 @@ export class PatchUserProvider {
         (patchUserDto as PatchTeacherDto).identifier ?? user.identifier;
 
       try {
-        await this.usersRepository.save(user);
+        await this.teacherRepository.save(user);
       } catch (error) {
         throw new RequestTimeoutException(error, {
           description: 'Error connecting to the database.',

@@ -3,11 +3,10 @@ GET http://localhost:8000/users/
 &page=1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI1LCJlbWFpbCI6Ik1hcmtNaXJhQGVtYWlsLmNvbSIsImlhdCI6MTczMjA1MzY5NiwiZXhwIjoxNzMyMDU3Mjk2LCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.tJrpBrNLyTd_YWvSqQWFq_ytrUbjfHd-28uzPTpfGBI
 
-GET http://localhost:8000/users/15/
-?limit=10
-&page=1
+GET http://localhost:8000/users/1/
+?userType=professor
 
 GET http://localhost:8000/users/
 ?limit=10
 &page=1
-&userType=professor
+&userType=aluno

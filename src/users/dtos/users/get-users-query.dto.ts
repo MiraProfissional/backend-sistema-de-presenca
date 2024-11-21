@@ -6,7 +6,7 @@ import { UserType } from 'src/users/enums/user-type.enum';
 class GetUsersQueryBaseDto {
   @ApiPropertyOptional({
     description: 'Get teacher or students users',
-    example: 'professor || aluno',
+    example: 'professor or aluno',
   })
   @IsString()
   @IsEnum(UserType)
