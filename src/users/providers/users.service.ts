@@ -147,7 +147,6 @@ export class UsersService {
   public async findAllStudents(
     paginationQueryDto: PaginationQueryDto,
   ): Promise<Paginated<User>> {
-    console.log('Entrou');
     const users = await this.paginationProvider.paginateQueryForUsers(
       {
         limit: paginationQueryDto.limit,
@@ -168,7 +167,6 @@ export class UsersService {
   }
 
   public async deleteUser(id: number) {
-    console.log('deleteUserByIdProvider', this.deleteUserByIdProvider);
     return await this.deleteUserByIdProvider.deleteUserById(id);
   }
 }
