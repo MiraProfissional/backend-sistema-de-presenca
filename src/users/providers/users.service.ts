@@ -1,10 +1,4 @@
-import {
-  forwardRef,
-  Inject,
-  Injectable,
-  RequestTimeoutException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { AuthService } from 'src/auth/providers/auth.service';
 import { User } from '../entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -26,6 +20,7 @@ import { GetUsersQueryDto } from '../dtos/users/get-users-query.dto';
 import { Teacher } from '../entities/teacher.entity';
 import { Student } from '../entities/student.entity';
 import { DeleteUsersQueryDto } from '../dtos/users/delete-user.dto';
+import { FindOneUserByEmailProvider } from './find-one-user-by-email.provider';
 
 /** Class to connect to Users table and perform business operations */
 @Injectable()
@@ -34,12 +29,6 @@ export class UsersService {
   constructor(
     @Inject(forwardRef(() => AuthService))
     private readonly authService: AuthService,
-
-    /* 
-    Injecting usersRepository
-    */
-    @InjectRepository(User)
-    private readonly usersRepository: Repository<User>,
 
     /* 
     Injecting teachersRepository
@@ -52,6 +41,9 @@ export class UsersService {
     */
     @InjectRepository(Student)
     private readonly studentsRepository: Repository<Student>,
+
+    // Inject findOneUserByEmail
+    private readonly findOneUserByEmail: FindOneUserByEmailProvider,
 
     // Inject createUserProvider
     private readonly createUserProvider: CreateUserProvider,
@@ -127,23 +119,8 @@ export class UsersService {
     return await this.getUserByIdProvider.getUserById(id, userType);
   }
 
-  public async findOneUserByEmail(email: string) {
-    let user: User | undefined = undefined;
-
-    try {
-      user = await this.usersRepository.query(
-        `SELECT * FROM public."user" WHERE TRIM(email) = $1 LIMIT 1`,
-        [email.trim()],
-      );
-    } catch (error) {
-      throw new RequestTimeoutException(error);
-    }
-
-    if (!user[0]) {
-      throw new UnauthorizedException('User does not exist');
-    }
-
-    return user[0];
+  public async findUserByEmail(email: string) {
+    return await this.findOneUserByEmail.findOneUserByEmail(email);
   }
 
   public async findAllTeachers(
