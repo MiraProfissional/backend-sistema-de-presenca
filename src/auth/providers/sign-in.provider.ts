@@ -32,29 +32,13 @@ export class SignInProvider {
   ) {}
 
   public async signIn(signInDto: SignInDto) {
-    console.log('Entrou na FindOneUserByEmailProvider');
-
-    const email = signInDto.email;
-
-    console.log('Email usado (TypeORM):', email);
-    console.log('Parâmetros enviados (query):', [email]);
-
-    const user = await this.usersRepository.query(
-      `SELECT * FROM public."user" WHERE TRIM(email) = $1 LIMIT 1`,
-      [email.trim()],
-    );
-
-    console.log('Resultado (TRIM aplicado):', user[0]);
-
-    if (!user[0]) {
-      throw new UnauthorizedException('User does not exist');
-    }
+    const user = await this.verifyUser(signInDto.email);
 
     let isEqual: boolean = false;
 
     isEqual = await this.hashingProvider.comparePassword(
       signInDto.password,
-      user[0].password,
+      user.password,
     );
 
     console.log(isEqual);
@@ -65,5 +49,24 @@ export class SignInProvider {
 
     //Returning the Token
     return await this.generateTokenProvider.generateTokens(user);
+  }
+
+  public async verifyUser(email: string) {
+    let user: User | undefined = undefined;
+
+    try {
+      user = await this.usersRepository.query(
+        `SELECT * FROM public."user" WHERE TRIM(email) = $1 LIMIT 1`,
+        [email.trim()],
+      );
+    } catch (error) {
+      throw new RequestTimeoutException(error);
+    }
+
+    if (!user[0]) {
+      throw new UnauthorizedException('User does not exist');
+    }
+
+    return user[0];
   }
 }

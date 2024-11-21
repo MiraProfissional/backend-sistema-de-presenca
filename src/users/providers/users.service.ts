@@ -2,6 +2,7 @@ import {
   forwardRef,
   Inject,
   Injectable,
+  RequestTimeoutException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { AuthService } from 'src/auth/providers/auth.service';
@@ -22,7 +23,6 @@ import { UserType } from '../enums/user-type.enum';
 import { PatchUserProvider } from './patch-user.provider';
 import { DeleteUserByIdProvider } from './delete-user-by-id.provider';
 import { GetUsersQueryDto } from '../dtos/users/get-users-query.dto';
-import { FindOneUserByEmailProvider } from './find-one-user-by-email.provider';
 
 /** Class to connect to Users table and perform business operations */
 @Injectable()
@@ -36,9 +36,7 @@ export class UsersService {
     Injecting usersRepository
     */
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-
-    private readonly findOneUserByEmailProvider: FindOneUserByEmailProvider,
+    private readonly usersRepository: Repository<User>,
 
     // Inject createUserProvider
     private readonly createUserProvider: CreateUserProvider,
@@ -101,7 +99,7 @@ export class UsersService {
         limit: getUsersQueryDto.limit,
         page: getUsersQueryDto.page,
       },
-      this.userRepository,
+      this.usersRepository,
     );
 
     return users;
@@ -113,23 +111,22 @@ export class UsersService {
   }
 
   public async findOneUserByEmail(email: string) {
-    console.log('Entrou na FindOneUserByEmailProvider');
+    let user: User | undefined = undefined;
 
-    console.log('Email usado (TypeORM):', email);
-    console.log('Parâmetros enviados (query):', [email]);
+    try {
+      user = await this.usersRepository.query(
+        `SELECT * FROM public."user" WHERE TRIM(email) = $1 LIMIT 1`,
+        [email.trim()],
+      );
+    } catch (error) {
+      throw new RequestTimeoutException(error);
+    }
 
-    const user = await this.userRepository.query(
-      `SELECT * FROM public."user" WHERE TRIM(email) = $1 LIMIT 1`,
-      [email.trim()],
-    );
-
-    console.log('Resultado (TRIM aplicado):', user);
-
-    if (!user || user.length === 0) {
+    if (!user[0]) {
       throw new UnauthorizedException('User does not exist');
     }
 
-    return user[0]; // Retorne apenas o primeiro resultado
+    return user[0];
   }
 
   public async findAllTeachers(
@@ -140,7 +137,7 @@ export class UsersService {
         limit: paginationQueryDto.limit,
         page: paginationQueryDto.page,
       },
-      this.userRepository,
+      this.usersRepository,
       UserType.TEACHER,
     );
 
@@ -156,7 +153,7 @@ export class UsersService {
         limit: paginationQueryDto.limit,
         page: paginationQueryDto.page,
       },
-      this.userRepository,
+      this.usersRepository,
       UserType.STUDENT,
     );
     console.log('Saiu');

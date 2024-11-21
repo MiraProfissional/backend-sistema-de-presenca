@@ -37,7 +37,7 @@ const ENV = process.env.NODE_ENV;
 
         // Only in development mode
         synchronize: configService.get('database.synchronize'),
-        logging: true,
+
         // Postrgres options
         host: configService.get('database.host'),
         port: Number(configService.get('database.port')),
