@@ -9,6 +9,9 @@ import { SignInDto } from '../dtos/signin.dto';
 import { UsersService } from 'src/users/providers/users.service';
 import { HashingProvider } from './hashing.provider';
 import { GenerateTokensProvider } from './generate-tokens.provider';
+import { Repository } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class SignInProvider {
@@ -16,6 +19,10 @@ export class SignInProvider {
     //Inject usersService
     @Inject(forwardRef(() => UsersService))
     private readonly usersService: UsersService,
+
+    //Inject usersRepository
+    @InjectRepository(User)
+    private readonly usersRepository: Repository<User>,
 
     //Inject hashingProvider
     private readonly hashingProvider: HashingProvider,
@@ -25,20 +32,32 @@ export class SignInProvider {
   ) {}
 
   public async signIn(signInDto: SignInDto) {
-    const user = await this.usersService.findOneUserByEmail(signInDto.email);
+    console.log('Entrou na FindOneUserByEmailProvider');
+
+    const email = signInDto.email;
+
+    console.log('Email usado (TypeORM):', email);
+    console.log('Parâmetros enviados (query):', [email]);
+
+    const user = await this.usersRepository.query(
+      `SELECT * FROM public."user" WHERE TRIM(email) = $1 LIMIT 1`,
+      [email.trim()],
+    );
+
+    console.log('Resultado (TRIM aplicado):', user[0]);
+
+    if (!user[0]) {
+      throw new UnauthorizedException('User does not exist');
+    }
 
     let isEqual: boolean = false;
 
-    try {
-      isEqual = await this.hashingProvider.comparePassword(
-        signInDto.password,
-        user.password,
-      );
-    } catch (error) {
-      throw new RequestTimeoutException(error, {
-        description: 'Could not compare passwords',
-      });
-    }
+    isEqual = await this.hashingProvider.comparePassword(
+      signInDto.password,
+      user[0].password,
+    );
+
+    console.log(isEqual);
 
     if (!isEqual) {
       throw new UnauthorizedException('Incorrect Password');
