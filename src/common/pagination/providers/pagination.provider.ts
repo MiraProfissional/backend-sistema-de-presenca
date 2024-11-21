@@ -69,7 +69,7 @@ export class PaginationProvider {
   ): Promise<Paginated<User>> {
     const results = await repository.find({
       where: {
-        type: `${userType}`,
+        type: userType,
       },
       skip: (paginationQuery.page - 1) * paginationQuery.limit,
       take: paginationQuery.limit,

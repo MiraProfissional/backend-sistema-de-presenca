@@ -1,5 +1,4 @@
-import { Student } from 'src/users/entities/student.entity';
-import { Teacher } from 'src/users/entities/teacher.entity';
+import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   Entity,
@@ -33,13 +32,13 @@ export class Discipline {
   })
   ipCamera: string;
 
-  @ManyToOne(() => Teacher, (teacher) => teacher.disciplines, {
+  @ManyToOne(() => User, (user) => user.id, {
     eager: true,
     nullable: false,
   })
-  teacher: Teacher;
+  teacher: User;
 
-  @ManyToMany(() => Student, (student) => student.disciplines, { eager: true })
+  @ManyToMany(() => User, (user) => user.id, { eager: true })
   @JoinTable()
-  students: Student[];
+  students: User[];
 }

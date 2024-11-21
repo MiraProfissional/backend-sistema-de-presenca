@@ -2,7 +2,7 @@ import { ChildEntity, Column, ManyToMany } from 'typeorm';
 import { User } from './user.entity';
 import { Discipline } from 'src/disciplines/discipline.entity';
 
-@ChildEntity('aluno')
+@ChildEntity()
 export class Student extends User {
   @Column({
     type: 'varchar',

@@ -1,9 +1,9 @@
 POST http://localhost:8000/users/professores
 Content-Type: application/json
 {
-    "name" : "Cleide",
-    "email":"Cleide@email.com",
-    "password":"CleideCoelho@1",
+    "name" : "Jorge",
+    "email":"Jorge@email.com",
+    "password":"Prodessor@1",
     "dateBirth": "2001-03-16T07:46:32+00:00",
     "cpf":"44455566678",
     "cellphone":"12987654321",
@@ -15,7 +15,7 @@ Content-Type: application/json
 {
     "name" : "Joaozinho",
     "email":"Joaozinho@email.com",
-    "password":"JoaozinhoMira@1",
+    "password":"Aluno@1",
     "dateBirth": "2001-03-16T07:46:32+00:00",
     "cpf":"44455566678",
     "cellphone":"12987654321",

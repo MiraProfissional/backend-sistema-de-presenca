@@ -10,10 +10,9 @@ import { UserType } from '../enums/user-type.enum';
 
 @Entity()
 @TableInheritance({
-  pattern: 'STI',
   column: {
     name: 'type',
-    type: 'varchar',
+    type: 'enum',
     enum: UserType,
   },
 })
@@ -62,11 +61,11 @@ export class User {
   cellphone: string;
 
   @Column({
-    type: 'varchar',
+    type: 'enum',
     enum: UserType,
     nullable: false,
   })
-  type: string;
+  type: UserType;
 
   @CreateDateColumn()
   createDate: Date;
