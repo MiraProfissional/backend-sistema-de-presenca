@@ -27,36 +27,6 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {} // Injecting Users Service
 
   @ApiOperation({
-    summary: 'Fetches a list of registered users on the application',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Users fetched successfully based on the query',
-  })
-  @ApiQuery({
-    name: 'limit',
-    type: 'number',
-    required: false,
-    description: 'The number of entries returned per query',
-    example: 10,
-  })
-  @ApiQuery({
-    name: 'page',
-    type: 'number',
-    required: false,
-    description:
-      'The position of the page number that you want the API to return',
-    example: 1,
-  })
-  @Get('/:id?')
-  public getUsers(
-    @Param() getUsersParamDto: GetUsersParamDto,
-    @Query() getUsersQueryDto: GetUsersQueryDto,
-  ) {
-    return this.usersService.getUsers(getUsersParamDto, getUsersQueryDto);
-  }
-
-  @ApiOperation({
     summary: 'Create a Student user on the application',
   })
   @ApiResponse({
@@ -116,5 +86,11 @@ export class UsersController {
   @Delete()
   public deleteUser(@Query('id', ParseIntPipe) id: number) {
     return this.usersService.deleteUser(id);
+  }
+
+  @Get()
+  public teste(@Body('email') email: string) {
+    console.log('Entrou e email:', email);
+    return this.usersService.findOneUserByEmail(email);
   }
 }

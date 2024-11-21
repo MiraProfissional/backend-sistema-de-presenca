@@ -17,22 +17,21 @@ export class FindOneUserByEmailProvider {
 
   public async findOneByEmail(email: string) {
     console.log('Entrou na FindOneUserByEmailProvider');
-    let user: User | undefined = undefined;
 
-    try {
-      user = await this.usersRepository.findOneBy({
-        email: email,
-      });
-    } catch (error) {
-      throw new RequestTimeoutException(error, {
-        description: 'Could not fetch the user',
-      });
-    }
+    console.log('Email usado (TypeORM):', email);
+    console.log('Parâmetros enviados (query):', [email]);
 
-    if (!user) {
+    const user = await this.usersRepository.query(
+      `SELECT * FROM public."user" WHERE TRIM(email) = $1 LIMIT 1`,
+      [email.trim()],
+    );
+
+    console.log('Resultado (TRIM aplicado):', user);
+
+    if (!user || user.length === 0) {
       throw new UnauthorizedException('User does not exist');
     }
 
-    return user;
+    return user[0]; // Retorne apenas o primeiro resultado
   }
 }

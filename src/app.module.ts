@@ -37,7 +37,7 @@ const ENV = process.env.NODE_ENV;
 
         // Only in development mode
         synchronize: configService.get('database.synchronize'),
-
+        logging: true,
         // Postrgres options
         host: configService.get('database.host'),
         port: Number(configService.get('database.port')),
@@ -53,10 +53,6 @@ const ENV = process.env.NODE_ENV;
     JwtModule.registerAsync(jwtConfig.asProvider()),
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    { provide: APP_GUARD, useClass: AuthenticationGuard },
-    AccessTokenGuard,
-  ],
+  providers: [AppService],
 })
 export class AppModule {}

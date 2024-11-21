@@ -25,7 +25,7 @@ export class SignInProvider {
   ) {}
 
   public async signIn(signInDto: SignInDto) {
-    const user = await this.usersService.findOneTeacherByEmail(signInDto.email);
+    const user = await this.usersService.findOneUserByEmail(signInDto.email);
 
     let isEqual: boolean = false;
 

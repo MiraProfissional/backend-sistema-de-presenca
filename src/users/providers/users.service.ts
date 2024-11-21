@@ -2,13 +2,11 @@ import {
   forwardRef,
   Inject,
   Injectable,
-  RequestTimeoutException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { AuthService } from 'src/auth/providers/auth.service';
 import { User } from '../entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-
 import { CreateUserProvider } from './create-user.provider';
 import { Repository } from 'typeorm';
 import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
@@ -24,7 +22,7 @@ import { UserType } from '../enums/user-type.enum';
 import { PatchUserProvider } from './patch-user.provider';
 import { DeleteUserByIdProvider } from './delete-user-by-id.provider';
 import { GetUsersQueryDto } from '../dtos/users/get-users-query.dto';
-import { Teacher } from '../entities/teacher.entity';
+import { FindOneUserByEmailProvider } from './find-one-user-by-email.provider';
 
 /** Class to connect to Users table and perform business operations */
 @Injectable()
@@ -38,13 +36,9 @@ export class UsersService {
     Injecting usersRepository
     */
     @InjectRepository(User)
-    private userRepository: Repository<User>,
+    private readonly userRepository: Repository<User>,
 
-    /* 
-    Injecting teacherRepository
-    */
-    @InjectRepository(Teacher)
-    private teacherRepository: Repository<Teacher>,
+    private readonly findOneUserByEmailProvider: FindOneUserByEmailProvider,
 
     // Inject createUserProvider
     private readonly createUserProvider: CreateUserProvider,
@@ -118,54 +112,24 @@ export class UsersService {
     return await this.getUserByIdProvider.getUserById(id);
   }
 
-  public async findOneTeacherByEmail(email: string) {
-    console.log('Entrou');
-
-    let user: Teacher | undefined = undefined;
-
-    try {
-      user = await this.teacherRepository.findOne({
-        where: {
-          email: email,
-        },
-        relations: ['public'],
-      });
-    } catch (error) {
-      throw new RequestTimeoutException(error, {
-        description: 'Could not fetch the user',
-      });
-    }
-
-    console.log('Saiu');
-
-    if (!user) {
-      throw new UnauthorizedException('User does not exist');
-    }
-
-    return user;
-  }
-
   public async findOneUserByEmail(email: string) {
-    console.log('Entrou');
-    let user = undefined;
-    console.log(user);
-    try {
-      user = await this.userRepository.findOne({
-        where: { email: email },
-        relations: ['public'],
-      });
-    } catch (error) {
-      console.log(error);
-      throw new RequestTimeoutException(error, {
-        description: 'Could not fetch the user',
-      });
-    }
-    console.log('Saiu');
-    if (!user) {
+    console.log('Entrou na FindOneUserByEmailProvider');
+
+    console.log('Email usado (TypeORM):', email);
+    console.log('Parâmetros enviados (query):', [email]);
+
+    const user = await this.userRepository.query(
+      `SELECT * FROM public."user" WHERE TRIM(email) = $1 LIMIT 1`,
+      [email.trim()],
+    );
+
+    console.log('Resultado (TRIM aplicado):', user);
+
+    if (!user || user.length === 0) {
       throw new UnauthorizedException('User does not exist');
     }
 
-    return user;
+    return user[0]; // Retorne apenas o primeiro resultado
   }
 
   public async findAllTeachers(
@@ -207,6 +171,7 @@ export class UsersService {
   }
 
   public async deleteUser(id: number) {
+    console.log('deleteUserByIdProvider', this.deleteUserByIdProvider);
     return await this.deleteUserByIdProvider.deleteUserById(id);
   }
 }
