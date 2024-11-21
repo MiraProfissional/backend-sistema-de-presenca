@@ -8,8 +8,6 @@ import { FindOneUserByEmailProvider } from './providers/find-one-user-by-email.p
 import { GetUserByIdProvider } from './providers/get-user-by-id.provider';
 import { User } from './entities/user.entity';
 import { PaginationModule } from 'src/common/pagination/pagination.module';
-import { Student } from './entities/student.entity';
-import { Teacher } from './entities/teacher.entity';
 import { PatchUserProvider } from './providers/patch-user.provider';
 import { DeleteUserByIdProvider } from './providers/delete-user-by-id.provider';
 
@@ -25,7 +23,7 @@ import { DeleteUserByIdProvider } from './providers/delete-user-by-id.provider';
   ],
   imports: [
     forwardRef(() => AuthModule),
-    TypeOrmModule.forFeature([User, Student, Teacher]),
+    TypeOrmModule.forFeature([User]),
     PaginationModule,
   ],
   exports: [UsersService],
