@@ -9,6 +9,7 @@ import { GetDisciplineByIdProvider } from './providers/get-discipline-by-id.prov
 import { PaginationModule } from 'src/common/pagination/pagination.module';
 import { UpdateDisciplineProvider } from './providers/update-discipline.provider';
 import { DeleteDisciplineByIdProvider } from './providers/delete-discipline-by-id.provider';
+import { SoftDeleteDisciplineByIdProvider } from './providers/soft-delete-discipline-by-id.provider';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { DeleteDisciplineByIdProvider } from './providers/delete-discipline-by-i
     GetDisciplineByIdProvider,
     UpdateDisciplineProvider,
     DeleteDisciplineByIdProvider,
+    SoftDeleteDisciplineByIdProvider,
   ],
   exports: [DisciplinesService],
 })

@@ -13,6 +13,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateDisciplineDto } from '../dtos/update-discipline.dto';
 import { UpdateDisciplineProvider } from './update-discipline.provider';
 import { DeleteDisciplineByIdProvider } from './delete-discipline-by-id.provider';
+import { SoftDeleteDisciplineByIdProvider } from './soft-delete-discipline-by-id.provider';
 
 @Injectable()
 export class DisciplinesService {
@@ -32,6 +33,9 @@ export class DisciplinesService {
 
     //Injecting paginationProvider
     private readonly paginationProvider: PaginationProvider,
+
+    //Injecting softDeleteDisciplineByIdProvider
+    private readonly softDeleteDisciplineByIdProvider: SoftDeleteDisciplineByIdProvider,
 
     //Injecting updateDisciplineProvider
     private readonly updateDisciplineProvider: UpdateDisciplineProvider,
@@ -90,5 +94,11 @@ export class DisciplinesService {
 
   public async deleteDisciplineById(id: number) {
     return await this.deleteDisciplineByIdProvider.deleteDisciplineById(id);
+  }
+
+  public async softDeleteDisciplineById(id: number) {
+    return await this.softDeleteDisciplineByIdProvider.softDeleteDisciplineById(
+      id,
+    );
   }
 }

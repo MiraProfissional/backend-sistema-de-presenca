@@ -74,4 +74,16 @@ export class DisciplinesController {
   public deleteDisciplines(@Query('id', ParseIntPipe) id: number) {
     return this.disciplinesService.deleteDisciplineById(id);
   }
+
+  @ApiOperation({
+    summary: 'Soft deletes a discipline on the application',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Discipline soft deleted successfully',
+  })
+  @Delete('soft-delete')
+  public softDeleteDisciplines(@Query('id', ParseIntPipe) id: number) {
+    return this.disciplinesService.softDeleteDisciplineById(id);
+  }
 }
