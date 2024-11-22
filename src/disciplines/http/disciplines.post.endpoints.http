@@ -1,0 +1,8 @@
+POST http://localhost:8000/disciplines
+Content-Type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiQWRsZXJAZW1haWwuY29tIiwidXNlclR5cGUiOiJwcm9mZXNzb3IiLCJpYXQiOjE3MzIyMzQ0MjAsImV4cCI6MTczMjIzODAyMCwiYXVkIjoibG9jYWxob3N0OjgwMDAiLCJpc3MiOiJsb2NhbGhvc3Q6ODAwMCJ9.aocHE0Eqie_8Lwer0YrHxKwIrbtEpiBaN1fKe0bY3t0
+{
+    "name" :"Gerência de Projetos de Software",
+    "code":"SDES06",
+    "ipCamera":"Prodessor@1"
+}

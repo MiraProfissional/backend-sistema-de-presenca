@@ -1,11 +1,15 @@
-import { User } from 'src/users/entities/user.entity';
+import { Student } from 'src/users/entities/student.entity';
+import { Teacher } from 'src/users/entities/teacher.entity';
 import {
   Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -16,12 +20,15 @@ export class Discipline {
   @Column({
     type: 'varchar',
     length: 96,
+    unique: true,
     nullable: false,
   })
   name: string;
 
   @Column({
     type: 'varchar',
+    length: 12,
+    unique: true,
     nullable: false,
   })
   code: string;
@@ -32,13 +39,25 @@ export class Discipline {
   })
   ipCamera: string;
 
-  @ManyToOne(() => User, (user) => user.id, {
+  @ManyToOne(() => Teacher, (teacher) => teacher.id, {
     eager: true,
     nullable: false,
   })
-  teacher: User;
+  teacher: Teacher;
 
-  @ManyToMany(() => User, (user) => user.id, { eager: true })
+  @ManyToMany(() => Student, (student) => student.id, {
+    eager: true,
+    nullable: true,
+  })
   @JoinTable()
-  students: User[];
+  students?: Student[];
+
+  @CreateDateColumn()
+  createDate: Date;
+
+  @UpdateDateColumn()
+  updateDate: Date;
+
+  @DeleteDateColumn()
+  deleteDate: Date;
 }
