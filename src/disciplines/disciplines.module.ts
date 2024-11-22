@@ -8,6 +8,7 @@ import { UsersModule } from 'src/users/users.module';
 import { GetDisciplineByIdProvider } from './providers/get-discipline-by-id.provider';
 import { PaginationModule } from 'src/common/pagination/pagination.module';
 import { UpdateDisciplineProvider } from './providers/update-discipline.provider';
+import { DeleteDisciplineByIdProvider } from './providers/delete-discipline-by-id.provider';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { UpdateDisciplineProvider } from './providers/update-discipline.provider
     CreateDisciplineProvider,
     GetDisciplineByIdProvider,
     UpdateDisciplineProvider,
+    DeleteDisciplineByIdProvider,
   ],
   exports: [DisciplinesService],
 })

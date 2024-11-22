@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -66,5 +68,10 @@ export class DisciplinesController {
   @Patch()
   public updateDisciplines(@Body() updateDisciplineDto: UpdateDisciplineDto) {
     return this.disciplinesService.updateDiscipline(updateDisciplineDto);
+  }
+
+  @Delete()
+  public deleteDisciplines(@Query('id', ParseIntPipe) id: number) {
+    return this.disciplinesService.deleteDisciplineById(id);
   }
 }

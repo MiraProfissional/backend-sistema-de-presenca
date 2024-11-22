@@ -12,12 +12,16 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateDisciplineDto } from '../dtos/update-discipline.dto';
 import { UpdateDisciplineProvider } from './update-discipline.provider';
+import { DeleteDisciplineByIdProvider } from './delete-discipline-by-id.provider';
 
 @Injectable()
 export class DisciplinesService {
   constructor(
     //Injecting createDisciplineProvider
     private readonly createDisciplineProvider: CreateDisciplineProvider,
+
+    //Injecting deleteDisciplineByIdProvider
+    private readonly deleteDisciplineByIdProvider: DeleteDisciplineByIdProvider,
 
     //Injecting disciplinesRepository
     @InjectRepository(Discipline)
@@ -57,7 +61,7 @@ export class DisciplinesService {
   public async findOneDisciplineById(
     getDisciplinesParamDto: GetDisciplinesParamDto,
   ): Promise<Discipline> {
-    return this.getDisciplineByIdProvider.getDisciplineById(
+    return await this.getDisciplineByIdProvider.getDisciplineById(
       getDisciplinesParamDto.id,
     );
   }
@@ -79,6 +83,12 @@ export class DisciplinesService {
   public async updateDiscipline(
     updateDisciplineDto: UpdateDisciplineDto,
   ): Promise<Discipline> {
-    return this.updateDisciplineProvider.updateDiscipline(updateDisciplineDto);
+    return await this.updateDisciplineProvider.updateDiscipline(
+      updateDisciplineDto,
+    );
+  }
+
+  public async deleteDisciplineById(id: number) {
+    return await this.deleteDisciplineByIdProvider.deleteDisciplineById(id);
   }
 }
