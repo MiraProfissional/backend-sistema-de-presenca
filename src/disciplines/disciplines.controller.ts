@@ -14,6 +14,13 @@ export class DisciplinesController {
     private readonly disciplinesService: DisciplinesService,
   ) {}
 
+  @ApiOperation({
+    summary: 'Fetch disciplines on the application',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Disciplines fetched successfully',
+  })
   @Get('/:id?')
   public getDisciplines(
     @Param() getDisciplinesParamDto: GetDisciplinesParamDto,
