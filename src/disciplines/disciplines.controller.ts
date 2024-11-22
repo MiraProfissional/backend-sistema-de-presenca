@@ -70,6 +70,13 @@ export class DisciplinesController {
     return this.disciplinesService.updateDiscipline(updateDisciplineDto);
   }
 
+  @ApiOperation({
+    summary: 'Deletes a discipline on the application',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Discipline deleted successfully',
+  })
   @Delete()
   public deleteDisciplines(@Query('id', ParseIntPipe) id: number) {
     return this.disciplinesService.deleteDisciplineById(id);
