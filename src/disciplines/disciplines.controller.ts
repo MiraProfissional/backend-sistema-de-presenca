@@ -17,6 +17,7 @@ import { ActiveUserData } from 'src/auth/active-user.interface';
 import { GetDisciplinesParamDto } from './dtos/get-disciplines-param.dto';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { UpdateDisciplineDto } from './dtos/update-discipline.dto';
+import { AddStudentsDto } from './dtos/add-students.dto';
 
 @Controller('disciplines')
 export class DisciplinesController {
@@ -92,5 +93,16 @@ export class DisciplinesController {
   @Delete('soft-delete')
   public softDeleteDisciplines(@Query('id', ParseIntPipe) id: number) {
     return this.disciplinesService.softDeleteDisciplineById(id);
+  }
+
+  @Post('/:disciplineId/students')
+  public addStudentToDiscipline(
+    @Param('disciplineId', ParseIntPipe) disciplineId: number,
+    @Body() addStudentsDto: AddStudentsDto,
+  ) {
+    return this.disciplinesService.addStudentsToDisciplineById(
+      disciplineId,
+      addStudentsDto,
+    );
   }
 }

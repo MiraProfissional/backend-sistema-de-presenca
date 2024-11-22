@@ -21,6 +21,7 @@ import { Teacher } from '../entities/teacher.entity';
 import { Student } from '../entities/student.entity';
 import { DeleteUsersQueryDto } from '../dtos/users/delete-user.dto';
 import { FindOneUserByEmailProvider } from './find-one-user-by-email.provider';
+import { FindUsersByIdProvider } from './find-users-by-id.provider';
 
 /** Class to connect to Users table and perform business operations */
 @Injectable()
@@ -48,11 +49,14 @@ export class UsersService {
     // Inject createUserProvider
     private readonly createUserProvider: CreateUserProvider,
 
-    //Injecting paginationProvider
-    private readonly paginationProvider: PaginationProvider,
-
     //Injecting getUserByIdProvider
     private readonly getUserByIdProvider: GetUserByIdProvider,
+
+    //Injecting findUsersByIdProvider
+    private readonly findUsersByIdProvider: FindUsersByIdProvider,
+
+    //Injecting paginationProvider
+    private readonly paginationProvider: PaginationProvider,
 
     //Injecting patchUserProvider
     private readonly patchUserProvider: PatchUserProvider,
@@ -161,5 +165,9 @@ export class UsersService {
     return await this.deleteUserByIdProvider.deleteUserById(
       deleteUsersQueryDto,
     );
+  }
+
+  public async findUsersById(ids: number[]) {
+    return await this.findUsersByIdProvider.findUsersById(ids);
   }
 }
