@@ -1,7 +1,8 @@
-import { ChildEntity, Column } from 'typeorm';
+import { Column, Entity, ManyToMany } from 'typeorm';
 import { User } from './user.entity';
+import { Discipline } from 'src/disciplines/discipline.entity';
 
-@ChildEntity('aluno')
+@Entity()
 export class Student extends User {
   @Column({
     type: 'varchar',
@@ -14,4 +15,7 @@ export class Student extends User {
     nullable: false,
   })
   course: string;
+
+  @ManyToMany(() => Discipline, (discipline) => discipline.students)
+  disciplines: Student[];
 }

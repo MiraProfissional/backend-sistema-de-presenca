@@ -3,21 +3,11 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-  TableInheritance,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserType } from '../enums/user-type.enum';
 
 @Entity()
-@TableInheritance({
-  pattern: 'STI',
-  column: {
-    name: 'type',
-    type: 'varchar',
-    enum: UserType,
-  },
-})
-export class User {
+export abstract class User {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -60,13 +50,6 @@ export class User {
     nullable: false,
   })
   cellphone: string;
-
-  @Column({
-    type: 'varchar',
-    enum: UserType,
-    nullable: false,
-  })
-  type: string;
 
   @CreateDateColumn()
   createDate: Date;

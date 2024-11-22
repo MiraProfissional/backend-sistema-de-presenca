@@ -12,6 +12,8 @@ import { GenerateTokensProvider } from './providers/generate-tokens.provider';
 import { RefreshTokensProvider } from './providers/refresh-tokens.provider';
 import { User } from 'src/users/entities/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Teacher } from 'src/users/entities/teacher.entity';
+import { Student } from 'src/users/entities/student.entity';
 
 @Module({
   controllers: [AuthController],
@@ -27,7 +29,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   ],
   imports: [
     forwardRef(() => UsersModule),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Teacher, Student]),
     ConfigModule.forFeature(jwtConfig),
     JwtModule.registerAsync(jwtConfig.asProvider()),
   ],

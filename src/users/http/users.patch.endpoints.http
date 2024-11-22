@@ -1,8 +1,7 @@
-PATCH http://localhost:8000/users/alunos
+PATCH http://localhost:8000/users/professores
 Content-Type: application/json
 
 {
-    "id": 13,
-    "email":"johndoe@email.com",
-    "course":"Engenharia da Computação"
+    "id": 24,
+    "email":"johndoetest@email.com"
 }

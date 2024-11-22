@@ -4,34 +4,42 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { User } from '../entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Teacher } from '../entities/teacher.entity';
+import { Student } from '../entities/student.entity';
 
 @Injectable()
 export class FindOneUserByEmailProvider {
   constructor(
-    //Inject usersRepository
-    @InjectRepository(User)
-    private readonly usersRepository: Repository<User>,
+    /* 
+    Injecting teachersRepository
+    */
+    @InjectRepository(Teacher)
+    private readonly teachersRepository: Repository<Teacher>,
+
+    /* 
+    Injecting studentsRepository
+    */
+    @InjectRepository(Student)
+    private readonly studentsRepository: Repository<Student>,
   ) {}
 
-  public async findOneByEmail(email: string) {
-    console.log('Entrou na FindOneUserByEmailProvider');
+  public async findOneUserByEmail(email: string) {
+    let user: Teacher | Student | undefined = undefined;
 
-    console.log('Email usado (TypeORM):', email);
-    console.log('Parâmetros enviados (query):', [email]);
+    try {
+      user = await this.teachersRepository.findOneBy({ email });
+      if (!user) {
+        user = await this.studentsRepository.findOneBy({ email });
+      }
+    } catch (error) {
+      throw new RequestTimeoutException(error);
+    }
 
-    const user = await this.usersRepository.query(
-      `SELECT * FROM public."user" WHERE TRIM(email) = $1 LIMIT 1`,
-      [email.trim()],
-    );
-
-    console.log('Resultado (TRIM aplicado):', user);
-
-    if (!user || user.length === 0) {
+    if (!user) {
       throw new UnauthorizedException('User does not exist');
     }
 
-    return user[0]; // Retorne apenas o primeiro resultado
+    return user;
   }
 }

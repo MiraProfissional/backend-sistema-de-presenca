@@ -1,10 +1,4 @@
-import {
-  forwardRef,
-  Inject,
-  Injectable,
-  RequestTimeoutException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { AuthService } from 'src/auth/providers/auth.service';
 import { User } from '../entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -23,6 +17,10 @@ import { UserType } from '../enums/user-type.enum';
 import { PatchUserProvider } from './patch-user.provider';
 import { DeleteUserByIdProvider } from './delete-user-by-id.provider';
 import { GetUsersQueryDto } from '../dtos/users/get-users-query.dto';
+import { Teacher } from '../entities/teacher.entity';
+import { Student } from '../entities/student.entity';
+import { DeleteUsersQueryDto } from '../dtos/users/delete-user.dto';
+import { FindOneUserByEmailProvider } from './find-one-user-by-email.provider';
 
 /** Class to connect to Users table and perform business operations */
 @Injectable()
@@ -33,10 +31,19 @@ export class UsersService {
     private readonly authService: AuthService,
 
     /* 
-    Injecting usersRepository
+    Injecting teachersRepository
     */
-    @InjectRepository(User)
-    private readonly usersRepository: Repository<User>,
+    @InjectRepository(Teacher)
+    private readonly teachersRepository: Repository<Teacher>,
+
+    /* 
+    Injecting studentsRepository
+    */
+    @InjectRepository(Student)
+    private readonly studentsRepository: Repository<Student>,
+
+    // Inject findOneUserByEmail
+    private readonly findOneUserByEmail: FindOneUserByEmailProvider,
 
     // Inject createUserProvider
     private readonly createUserProvider: CreateUserProvider,
@@ -66,11 +73,14 @@ export class UsersService {
     getUsersParamDto: GetUsersParamDto,
     getUsersQueryDto: GetUsersQueryDto,
   ) {
+    if (getUsersParamDto.id) {
+      return await this.findOneUserById(
+        getUsersParamDto.id,
+        getUsersQueryDto.userType,
+      );
+    }
     if (getUsersQueryDto.userType) {
       return await this.getGroupUsers(getUsersQueryDto);
-    }
-    if (getUsersParamDto.id) {
-      return await this.findOneUserById(getUsersParamDto.id);
     }
     if (!getUsersParamDto.id) {
       return await this.findAll(getUsersQueryDto);
@@ -94,51 +104,34 @@ export class UsersService {
   public async findAll(
     getUsersQueryDto: GetUsersQueryDto,
   ): Promise<Paginated<User>> {
-    const users = await this.paginationProvider.paginateQuery(
-      {
-        limit: getUsersQueryDto.limit,
-        page: getUsersQueryDto.page,
-      },
-      this.usersRepository,
-    );
+    const paginationQueryDto: PaginationQueryDto = {
+      limit: getUsersQueryDto.limit,
+      page: getUsersQueryDto.page,
+    };
+    const users =
+      await this.paginationProvider.paginateQueryAllUsers(paginationQueryDto);
 
     return users;
   }
 
   /** The method to get one specific user by your ID from the database */
-  public async findOneUserById(id: number) {
-    return await this.getUserByIdProvider.getUserById(id);
+  public async findOneUserById(id: number, userType: string) {
+    return await this.getUserByIdProvider.getUserById(id, userType);
   }
 
-  public async findOneUserByEmail(email: string) {
-    let user: User | undefined = undefined;
-
-    try {
-      user = await this.usersRepository.query(
-        `SELECT * FROM public."user" WHERE TRIM(email) = $1 LIMIT 1`,
-        [email.trim()],
-      );
-    } catch (error) {
-      throw new RequestTimeoutException(error);
-    }
-
-    if (!user[0]) {
-      throw new UnauthorizedException('User does not exist');
-    }
-
-    return user[0];
+  public async findUserByEmail(email: string) {
+    return await this.findOneUserByEmail.findOneUserByEmail(email);
   }
 
   public async findAllTeachers(
     paginationQueryDto: PaginationQueryDto,
-  ): Promise<Paginated<User>> {
-    const teachers = await this.paginationProvider.paginateQueryForUsers(
+  ): Promise<Paginated<Teacher>> {
+    const teachers = await this.paginationProvider.paginateQuery(
       {
         limit: paginationQueryDto.limit,
         page: paginationQueryDto.page,
       },
-      this.usersRepository,
-      UserType.TEACHER,
+      this.teachersRepository,
     );
 
     return teachers;
@@ -146,18 +139,15 @@ export class UsersService {
 
   public async findAllStudents(
     paginationQueryDto: PaginationQueryDto,
-  ): Promise<Paginated<User>> {
-    console.log('Entrou');
-    const users = await this.paginationProvider.paginateQueryForUsers(
+  ): Promise<Paginated<Student>> {
+    const students = await this.paginationProvider.paginateQuery(
       {
         limit: paginationQueryDto.limit,
         page: paginationQueryDto.page,
       },
-      this.usersRepository,
-      UserType.STUDENT,
+      this.studentsRepository,
     );
-    console.log('Saiu');
-    return users;
+    return students;
   }
 
   public async updateUser(
@@ -167,8 +157,9 @@ export class UsersService {
     return await this.patchUserProvider.updateUser(userType, patchUserDto);
   }
 
-  public async deleteUser(id: number) {
-    console.log('deleteUserByIdProvider', this.deleteUserByIdProvider);
-    return await this.deleteUserByIdProvider.deleteUserById(id);
+  public async deleteUser(deleteUsersQueryDto: DeleteUsersQueryDto) {
+    return await this.deleteUserByIdProvider.deleteUserById(
+      deleteUsersQueryDto,
+    );
   }
 }

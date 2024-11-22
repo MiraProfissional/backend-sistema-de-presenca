@@ -7,7 +7,6 @@ import {
   Body,
   Patch,
   Delete,
-  ParseIntPipe,
 } from '@nestjs/common';
 import { UsersService } from './providers/users.service';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -20,11 +19,42 @@ import { CreateStudentDto } from './dtos/students/create-student.dto';
 import { PatchStudentDto } from './dtos/students/patch-student.dto';
 import { UserType } from './enums/user-type.enum';
 import { GetUsersQueryDto } from './dtos/users/get-users-query.dto';
+import { DeleteUsersQueryDto } from './dtos/users/delete-user.dto';
 
 @Controller('users')
 @ApiTags('Users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {} // Injecting Users Service
+
+  @ApiOperation({
+    summary: 'Fetches a list of registered users on the application',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Users fetched successfully based on the query',
+  })
+  @ApiQuery({
+    name: 'limit',
+    type: 'number',
+    required: false,
+    description: 'The number of entries returned per query',
+    example: 10,
+  })
+  @ApiQuery({
+    name: 'page',
+    type: 'number',
+    required: false,
+    description:
+      'The position of the page number that you want the API to return',
+    example: 1,
+  })
+  @Get('/:id?')
+  public getUsers(
+    @Param() getUsersParamDto: GetUsersParamDto,
+    @Query() getUsersQueryDto: GetUsersQueryDto,
+  ) {
+    return this.usersService.getUsers(getUsersParamDto, getUsersQueryDto);
+  }
 
   @ApiOperation({
     summary: 'Create a Student user on the application',
@@ -84,13 +114,7 @@ export class UsersController {
     description: 'User deleted successfully',
   })
   @Delete()
-  public deleteUser(@Query('id', ParseIntPipe) id: number) {
-    return this.usersService.deleteUser(id);
-  }
-
-  @Get()
-  public teste(@Body('email') email: string) {
-    console.log('Entrou e email:', email);
-    return this.usersService.findOneUserByEmail(email);
+  public deleteUser(@Query() deleteUsersQueryDto: DeleteUsersQueryDto) {
+    return this.usersService.deleteUser(deleteUsersQueryDto);
   }
 }

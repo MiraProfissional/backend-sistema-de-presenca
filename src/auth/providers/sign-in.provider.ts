@@ -10,8 +10,9 @@ import { UsersService } from 'src/users/providers/users.service';
 import { HashingProvider } from './hashing.provider';
 import { GenerateTokensProvider } from './generate-tokens.provider';
 import { Repository } from 'typeorm';
-import { User } from 'src/users/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Teacher } from 'src/users/entities/teacher.entity';
+import { Student } from 'src/users/entities/student.entity';
 
 @Injectable()
 export class SignInProvider {
@@ -20,9 +21,17 @@ export class SignInProvider {
     @Inject(forwardRef(() => UsersService))
     private readonly usersService: UsersService,
 
-    //Inject usersRepository
-    @InjectRepository(User)
-    private readonly usersRepository: Repository<User>,
+    /* 
+    Injecting teachersRepository
+    */
+    @InjectRepository(Teacher)
+    private readonly teachersRepository: Repository<Teacher>,
+
+    /* 
+    Injecting studentsRepository
+    */
+    @InjectRepository(Student)
+    private readonly studentsRepository: Repository<Student>,
 
     //Inject hashingProvider
     private readonly hashingProvider: HashingProvider,
@@ -41,8 +50,6 @@ export class SignInProvider {
       user.password,
     );
 
-    console.log(isEqual);
-
     if (!isEqual) {
       throw new UnauthorizedException('Incorrect Password');
     }
@@ -52,21 +59,21 @@ export class SignInProvider {
   }
 
   public async verifyUser(email: string) {
-    let user: User | undefined = undefined;
+    let user: Teacher | Student | undefined = undefined;
 
     try {
-      user = await this.usersRepository.query(
-        `SELECT * FROM public."user" WHERE TRIM(email) = $1 LIMIT 1`,
-        [email.trim()],
-      );
+      user = await this.teachersRepository.findOneBy({ email });
+      if (!user) {
+        user = await this.studentsRepository.findOneBy({ email });
+      }
     } catch (error) {
       throw new RequestTimeoutException(error);
     }
 
-    if (!user[0]) {
+    if (!user) {
       throw new UnauthorizedException('User does not exist');
     }
 
-    return user[0];
+    return user;
   }
 }
