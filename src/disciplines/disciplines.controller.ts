@@ -1,9 +1,11 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { DisciplinesService } from './providers/disciplines.service';
 import { CreateDisciplineDto } from './dtos/create-discipline.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ActiveUser } from 'src/auth/decorators/active-user-data.decorator';
 import { ActiveUserData } from 'src/auth/active-user.interface';
+import { GetDisciplinesParamDto } from './dtos/get-disciplines-param.dto';
+import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 
 @Controller('disciplines')
 export class DisciplinesController {
@@ -11,6 +13,17 @@ export class DisciplinesController {
     //Injecting disciplinesService
     private readonly disciplinesService: DisciplinesService,
   ) {}
+
+  @Get('/:id?')
+  public getDisciplines(
+    @Param() getDisciplinesParamDto: GetDisciplinesParamDto,
+    @Query() paginationQueryDto: PaginationQueryDto,
+  ) {
+    return this.disciplinesService.getDiscplines(
+      getDisciplinesParamDto,
+      paginationQueryDto,
+    );
+  }
 
   @ApiOperation({
     summary: 'Create a discipline on the application',

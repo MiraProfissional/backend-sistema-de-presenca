@@ -1,8 +1,8 @@
 POST http://localhost:8000/disciplines
 Content-Type: application/json
-Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiQWRsZXJAZW1haWwuY29tIiwidXNlclR5cGUiOiJwcm9mZXNzb3IiLCJpYXQiOjE3MzIyMzQ0MjAsImV4cCI6MTczMjIzODAyMCwiYXVkIjoibG9jYWxob3N0OjgwMDAiLCJpc3MiOiJsb2NhbGhvc3Q6ODAwMCJ9.aocHE0Eqie_8Lwer0YrHxKwIrbtEpiBaN1fKe0bY3t0
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiQWRsZXJAZW1haWwuY29tIiwidXNlclR5cGUiOiJwcm9mZXNzb3IiLCJpYXQiOjE3MzIyOTE4MDUsImV4cCI6MTczMjI5NTQwNSwiYXVkIjoibG9jYWxob3N0OjgwMDAiLCJpc3MiOiJsb2NhbGhvc3Q6ODAwMCJ9.H85jHXWN6hCr8cqB4A3JaiA3yYfXlc_LajWjBXzcWTU
 {
-    "name" :"Gerência de Projetos de Software",
-    "code":"SDES06",
-    "ipCamera":"Prodessor@1"
+    "name" :"Cálculo B",
+    "code":"MAT00B",
+    "ipCamera":"192.168.1.101"
 }
