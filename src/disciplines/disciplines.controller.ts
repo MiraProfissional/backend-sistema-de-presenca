@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { DisciplinesService } from './providers/disciplines.service';
 import { CreateDisciplineDto } from './dtos/create-discipline.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -6,6 +14,7 @@ import { ActiveUser } from 'src/auth/decorators/active-user-data.decorator';
 import { ActiveUserData } from 'src/auth/active-user.interface';
 import { GetDisciplinesParamDto } from './dtos/get-disciplines-param.dto';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
+import { UpdateDisciplineDto } from './dtos/update-discipline.dto';
 
 @Controller('disciplines')
 export class DisciplinesController {
@@ -45,5 +54,10 @@ export class DisciplinesController {
     @ActiveUser() user: ActiveUserData,
   ) {
     return this.disciplinesService.createDisciplines(createDisciplineDto, user);
+  }
+
+  @Patch()
+  public updateDisciplines(@Body() updateDisciplineDto: UpdateDisciplineDto) {
+    return this.disciplinesService.updateDiscipline(updateDisciplineDto);
   }
 }

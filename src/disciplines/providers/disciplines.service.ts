@@ -10,22 +10,27 @@ import { Paginated } from 'src/common/pagination/interfaces/paginated.interface'
 import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UpdateDisciplineDto } from '../dtos/update-discipline.dto';
+import { UpdateDisciplineProvider } from './update-discipline.provider';
 
 @Injectable()
 export class DisciplinesService {
   constructor(
+    //Injecting createDisciplineProvider
+    private readonly createDisciplineProvider: CreateDisciplineProvider,
+
     //Injecting disciplinesRepository
     @InjectRepository(Discipline)
     private readonly disciplinesRepository: Repository<Discipline>,
-
-    //Injecting createDisciplineProvider
-    private readonly createDisciplineProvider: CreateDisciplineProvider,
 
     //Injecting getDisciplineByIdProvider
     private readonly getDisciplineByIdProvider: GetDisciplineByIdProvider,
 
     //Injecting paginationProvider
     private readonly paginationProvider: PaginationProvider,
+
+    //Injecting updateDisciplineProvider
+    private readonly updateDisciplineProvider: UpdateDisciplineProvider,
   ) {}
 
   public async createDisciplines(
@@ -69,5 +74,11 @@ export class DisciplinesService {
     );
 
     return disciplines;
+  }
+
+  public async updateDiscipline(
+    updateDisciplineDto: UpdateDisciplineDto,
+  ): Promise<Discipline> {
+    return this.updateDisciplineProvider.updateDiscipline(updateDisciplineDto);
   }
 }
