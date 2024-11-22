@@ -56,6 +56,13 @@ export class DisciplinesController {
     return this.disciplinesService.createDisciplines(createDisciplineDto, user);
   }
 
+  @ApiOperation({
+    summary: 'Updates a discipline on the application',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Discipline updated successfully',
+  })
   @Patch()
   public updateDisciplines(@Body() updateDisciplineDto: UpdateDisciplineDto) {
     return this.disciplinesService.updateDiscipline(updateDisciplineDto);
