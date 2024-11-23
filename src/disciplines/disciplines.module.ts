@@ -11,6 +11,7 @@ import { UpdateDisciplineProvider } from './providers/update-discipline.provider
 import { DeleteDisciplineByIdProvider } from './providers/delete-discipline-by-id.provider';
 import { SoftDeleteDisciplineByIdProvider } from './providers/soft-delete-discipline-by-id.provider';
 import { AddStudentsToOneDisciplineProvider } from './providers/add-students-to-one-discipline.provider';
+import { DeleteDisciplineStudentsByIdProvider } from './providers/delete-discipline-students-by-id.provider';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { AddStudentsToOneDisciplineProvider } from './providers/add-students-to-
     DeleteDisciplineByIdProvider,
     SoftDeleteDisciplineByIdProvider,
     AddStudentsToOneDisciplineProvider,
+    DeleteDisciplineStudentsByIdProvider,
   ],
   exports: [DisciplinesService],
 })

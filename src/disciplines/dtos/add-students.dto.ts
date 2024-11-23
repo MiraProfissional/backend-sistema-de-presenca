@@ -3,8 +3,8 @@ import { IsArray, IsInt } from 'class-validator';
 
 export class AddStudentsDto {
   @ApiProperty({
-    description: 'This is the name of the discipline',
-    example: 'Gerência de Projetos de Software',
+    description: 'This is the array of students ids',
+    example: [1, 2],
   })
   @IsArray()
   @IsInt({ each: true })

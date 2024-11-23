@@ -11,7 +11,7 @@ import { UsersService } from 'src/users/providers/users.service';
 import { Student } from 'src/users/entities/student.entity';
 
 @Injectable()
-export class AddStudentsToOneDisciplineProvider {
+export class DeleteDisciplineStudentsByIdProvider {
   constructor(
     //Injecting disciplinesRepository
     @InjectRepository(Discipline)
@@ -21,10 +21,10 @@ export class AddStudentsToOneDisciplineProvider {
     private readonly usersService: UsersService,
   ) {}
 
-  public async addStudentsToOneDiscipline(
+  public async deleteDisciplineStudentsById(
     disciplineId: number,
     addStudentsDto: AddStudentsDto,
-  ): Promise<Discipline> {
+  ) {
     let discipline: Discipline | undefined = undefined;
 
     try {
@@ -39,14 +39,14 @@ export class AddStudentsToOneDisciplineProvider {
 
     if (!discipline) {
       throw new BadRequestException(
-        `Discipline with id: ${disciplineId} does not exist, please check the discipline id`,
+        `Discipline with id: ${disciplineId} does not exist, please check de discipline id`,
       );
     }
 
-    let students: Student[] = [];
+    let studentsToRemove: Student[] = [];
 
     try {
-      students = await this.usersService.findUsersById(
+      studentsToRemove = await this.usersService.findUsersById(
         addStudentsDto.studentsId,
       );
     } catch (error) {
@@ -55,18 +55,52 @@ export class AddStudentsToOneDisciplineProvider {
       });
     }
 
-    const filteredStudents = students.filter((item) => item !== undefined);
-
-    if (filteredStudents.length !== addStudentsDto.studentsId.length) {
+    if (studentsToRemove.length !== addStudentsDto.studentsId.length) {
       throw new BadRequestException(
         `Some student id does not exist, please check the students ids`,
       );
     }
 
-    discipline = {
-      ...discipline,
-      students: filteredStudents,
-    };
+    const absentStudents = studentsToRemove.filter(
+      (studentToRemove) =>
+        !discipline.students.some(
+          (student) => student.id === studentToRemove.id,
+        ),
+    );
+
+    if (absentStudents.length > 0) {
+      throw new BadRequestException(
+        `Students with IDs [${absentStudents.map(
+          (student) => student.id,
+        )}] are not associated with the discipline`,
+      );
+    }
+
+    const newStudents: Student[] = [];
+
+    for (const presentStudents of discipline.students) {
+      let shouldKeep = true;
+      for (const removeStudents of studentsToRemove) {
+        if (presentStudents.id === removeStudents.id) {
+          shouldKeep = false;
+          break;
+        }
+      }
+      if (shouldKeep) {
+        newStudents.push(presentStudents);
+      }
+    }
+
+    /*
+    discipline.students = discipline.students.filter(
+      (student) =>
+        !studentsToRemove.some(
+          (studentToRemove) => studentToRemove.id === student.id,
+        ),
+    );
+    */
+
+    discipline.students = newStudents;
 
     try {
       await this.disciplinesRepository.save(discipline);
@@ -76,6 +110,9 @@ export class AddStudentsToOneDisciplineProvider {
       });
     }
 
-    return discipline;
+    return {
+      deleted: true,
+      studentsId: addStudentsDto.studentsId,
+    };
   }
 }

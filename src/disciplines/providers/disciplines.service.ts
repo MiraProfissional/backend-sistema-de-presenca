@@ -16,6 +16,7 @@ import { DeleteDisciplineByIdProvider } from './delete-discipline-by-id.provider
 import { SoftDeleteDisciplineByIdProvider } from './soft-delete-discipline-by-id.provider';
 import { AddStudentsDto } from '../dtos/add-students.dto';
 import { AddStudentsToOneDisciplineProvider } from './add-students-to-one-discipline.provider';
+import { DeleteDisciplineStudentsByIdProvider } from './delete-discipline-students-by-id.provider';
 
 @Injectable()
 export class DisciplinesService {
@@ -28,6 +29,9 @@ export class DisciplinesService {
 
     //Injecting deleteDisciplineByIdProvider
     private readonly deleteDisciplineByIdProvider: DeleteDisciplineByIdProvider,
+
+    //Injecting deleteDisciplineStudentsByIdProvider
+    private readonly deleteDisciplineStudentsByIdProvider: DeleteDisciplineStudentsByIdProvider,
 
     //Injecting disciplinesRepository
     @InjectRepository(Discipline)
@@ -114,6 +118,16 @@ export class DisciplinesService {
     return await this.addStudentsToOneDisciplineProvider.addStudentsToOneDiscipline(
       disciplineId,
       addStudentsDto,
+    );
+  }
+
+  public async addDisciplineStudentById(
+    disciplineId: number,
+    deleteStudentsDto: AddStudentsDto,
+  ) {
+    return await this.deleteDisciplineStudentsByIdProvider.deleteDisciplineStudentsById(
+      disciplineId,
+      deleteStudentsDto,
     );
   }
 }

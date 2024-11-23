@@ -105,4 +105,15 @@ export class DisciplinesController {
       addStudentsDto,
     );
   }
+
+  @Delete('/:disciplineId/students')
+  public deleteDisciplineStudent(
+    @Param('disciplineId', ParseIntPipe) disciplineId: number,
+    @Body() deleteStudentsDto: AddStudentsDto,
+  ) {
+    return this.disciplinesService.addDisciplineStudentById(
+      disciplineId,
+      deleteStudentsDto,
+    );
+  }
 }

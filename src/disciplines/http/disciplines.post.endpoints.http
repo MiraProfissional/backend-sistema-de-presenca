@@ -9,7 +9,7 @@ Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIj
 
 POST http://localhost:8000/disciplines/16/students
 Content-Type: application/json
-Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiQWRsZXJAZW1haWwuY29tIiwidXNlclR5cGUiOiJwcm9mZXNzb3IiLCJpYXQiOjE3MzIzMTg3MzcsImV4cCI6MTczMjMyMjMzNywiYXVkIjoibG9jYWxob3N0OjgwMDAiLCJpc3MiOiJsb2NhbGhvc3Q6ODAwMCJ9.2_tCH9NeH4-ZOLefjkRyJCPVl7JnElgr6ntJDeFHFSM
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiQWRsZXJAZW1haWwuY29tIiwidXNlclR5cGUiOiJwcm9mZXNzb3IiLCJpYXQiOjE3MzIzODUwNDgsImV4cCI6MTczMjM4ODY0OCwiYXVkIjoibG9jYWxob3N0OjgwMDAiLCJpc3MiOiJsb2NhbGhvc3Q6ODAwMCJ9.R2IBBlNT-dsRO-MogcDctV3MSOXernYGZwbGGl-EOEo
 {
-    "studentsId": [1,2]
+    "studentsId": [1,2,3,4,5,6]
 }
