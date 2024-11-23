@@ -95,6 +95,13 @@ export class DisciplinesController {
     return this.disciplinesService.softDeleteDisciplineById(id);
   }
 
+  @ApiOperation({
+    summary: 'Add a student into a discipline',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Student added successfully',
+  })
   @Post('/:disciplineId/students')
   public addStudentToDiscipline(
     @Param('disciplineId', ParseIntPipe) disciplineId: number,
@@ -106,6 +113,13 @@ export class DisciplinesController {
     );
   }
 
+  @ApiOperation({
+    summary: 'Removes a student into a discipline',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Student removed successfully',
+  })
   @Delete('/:disciplineId/students')
   public deleteDisciplineStudent(
     @Param('disciplineId', ParseIntPipe) disciplineId: number,
