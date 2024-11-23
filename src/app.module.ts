@@ -55,6 +55,10 @@ const ENV = process.env.NODE_ENV;
     DisciplinesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    { provide: APP_GUARD, useClass: AuthenticationGuard },
+    AccessTokenGuard,
+  ],
 })
 export class AppModule {}

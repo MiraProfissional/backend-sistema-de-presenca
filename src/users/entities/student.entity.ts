@@ -17,5 +17,5 @@ export class Student extends User {
   course: string;
 
   @ManyToMany(() => Discipline, (discipline) => discipline.students)
-  disciplines: Student[];
+  disciplines: Discipline[];
 }

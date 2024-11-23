@@ -12,6 +12,7 @@ import { DeleteUserByIdProvider } from './providers/delete-user-by-id.provider';
 import { Student } from './entities/student.entity';
 import { Teacher } from './entities/teacher.entity';
 import { User } from './entities/user.entity';
+import { FindUsersByIdProvider } from './providers/find-users-by-id.provider';
 
 @Module({
   controllers: [UsersController],
@@ -22,6 +23,7 @@ import { User } from './entities/user.entity';
     GetUserByIdProvider,
     PatchUserProvider,
     DeleteUserByIdProvider,
+    FindUsersByIdProvider,
   ],
   imports: [
     forwardRef(() => AuthModule),
