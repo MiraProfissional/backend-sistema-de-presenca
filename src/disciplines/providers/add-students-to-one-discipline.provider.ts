@@ -55,18 +55,27 @@ export class AddStudentsToOneDisciplineProvider {
       });
     }
 
-    const filteredStudents = students.filter((item) => item !== undefined);
-
-    if (filteredStudents.length !== addStudentsDto.studentsId.length) {
+    if (students.length !== addStudentsDto.studentsId.length) {
       throw new BadRequestException(
         `Some student id does not exist, please check the students ids`,
       );
     }
 
-    discipline = {
-      ...discipline,
-      students: filteredStudents,
-    };
+    const alreadyEnrolled: number[] = students
+      .filter((student) =>
+        discipline.students.some((existing) => existing.id === student.id),
+      )
+      .map((student) => student.id);
+
+    if (alreadyEnrolled.length > 0) {
+      throw new BadRequestException(
+        `The following student IDs are already enrolled in the discipline: ${alreadyEnrolled.join(
+          ', ',
+        )}. Please provide only new student IDs.`,
+      );
+    }
+
+    discipline.students = [...discipline.students, ...students];
 
     try {
       await this.disciplinesRepository.save(discipline);
