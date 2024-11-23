@@ -114,7 +114,7 @@ export class DisciplinesController {
   }
 
   @ApiOperation({
-    summary: 'Removes a student into a discipline',
+    summary: 'Removes a student from a discipline',
   })
   @ApiResponse({
     status: 200,
