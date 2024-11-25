@@ -13,7 +13,7 @@ import { DisciplinesService } from './providers/disciplines.service';
 import { CreateDisciplineDto } from './dtos/create-discipline.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ActiveUser } from 'src/auth/decorators/active-user-data.decorator';
-import { ActiveUserData } from 'src/auth/active-user.interface';
+import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
 import { GetDisciplinesParamDto } from './dtos/get-disciplines-param.dto';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { UpdateDisciplineDto } from './dtos/update-discipline.dto';

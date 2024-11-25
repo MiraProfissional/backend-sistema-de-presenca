@@ -4,9 +4,10 @@ GET http://localhost:8000/users/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI1LCJlbWFpbCI6Ik1hcmtNaXJhQGVtYWlsLmNvbSIsImlhdCI6MTczMjA1MzY5NiwiZXhwIjoxNzMyMDU3Mjk2LCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.tJrpBrNLyTd_YWvSqQWFq_ytrUbjfHd-28uzPTpfGBI
 
 GET http://localhost:8000/users/1/
-?userType=professor
+?userType=aluno
 
 GET http://localhost:8000/users/
 ?limit=10
 &page=1
 &userType=aluno
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiQWRsZXJAZW1haWwuY29tIiwidXNlclR5cGUiOiJwcm9mZXNzb3IiLCJpYXQiOjE3MzI0OTQ5OTcsImV4cCI6MTczMjQ5ODU5NywiYXVkIjoibG9jYWxob3N0OjgwMDAiLCJpc3MiOiJsb2NhbGhvc3Q6ODAwMCJ9.d0F095VjTCQlGebKEIS4lQkCXd-OyqRdCCfrYE_Gnrs

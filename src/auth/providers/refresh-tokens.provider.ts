@@ -11,7 +11,7 @@ import jwtConfig from '../config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { GenerateTokensProvider } from './generate-tokens.provider';
 import { UsersService } from 'src/users/providers/users.service';
-import { ActiveUserData } from '../active-user.interface';
+import { ActiveUserData } from '../interfaces/active-user.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Teacher } from 'src/users/entities/teacher.entity';

@@ -7,7 +7,7 @@ import { Discipline } from '../discipline.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateDisciplineDto } from '../dtos/create-discipline.dto';
-import { ActiveUserData } from 'src/auth/active-user.interface';
+import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
 import { UsersService } from 'src/users/providers/users.service';
 
 @Injectable()

@@ -14,6 +14,7 @@ import { User } from 'src/users/entities/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Teacher } from 'src/users/entities/teacher.entity';
 import { Student } from 'src/users/entities/student.entity';
+import { GetUserInformationProvider } from './providers/get-user-information.provider';
 
 @Module({
   controllers: [AuthController],
@@ -26,6 +27,7 @@ import { Student } from 'src/users/entities/student.entity';
     SignInProvider,
     GenerateTokensProvider,
     RefreshTokensProvider,
+    GetUserInformationProvider,
   ],
   imports: [
     forwardRef(() => UsersModule),

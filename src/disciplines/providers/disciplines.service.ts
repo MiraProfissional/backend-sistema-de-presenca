@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDisciplineProvider } from './create-discipline.provider';
 import { CreateDisciplineDto } from '../dtos/create-discipline.dto';
-import { ActiveUserData } from 'src/auth/active-user.interface';
+import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
 import { GetDisciplinesParamDto } from '../dtos/get-disciplines-param.dto';
 import { GetDisciplineByIdProvider } from './get-discipline-by-id.provider';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
