@@ -39,13 +39,13 @@ export class Discipline {
   })
   ipCamera: string;
 
-  @ManyToOne(() => Teacher, (teacher) => teacher.id, {
+  @ManyToOne(() => Teacher, (teacher) => teacher.disciplines, {
     eager: true,
     nullable: false,
   })
   teacher: Teacher;
 
-  @ManyToMany(() => Student, (student) => student.id, {
+  @ManyToMany(() => Student, (student) => student.disciplines, {
     eager: true,
     nullable: true,
   })

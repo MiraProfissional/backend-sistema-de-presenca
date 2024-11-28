@@ -17,6 +17,8 @@ import { SoftDeleteDisciplineByIdProvider } from './soft-delete-discipline-by-id
 import { AddStudentsDto } from '../dtos/add-students.dto';
 import { AddStudentsToOneDisciplineProvider } from './add-students-to-one-discipline.provider';
 import { DeleteDisciplineStudentsByIdProvider } from './delete-discipline-students-by-id.provider';
+import { GetLinkedDisciplinesByIdDto } from '../dtos/get-linked-disciplines-by-id.dto';
+import { GetDisciplinesLinkedToAnIdProvider } from './get-disciplines-linked-to-an-id.provider';
 
 @Injectable()
 export class DisciplinesService {
@@ -39,6 +41,9 @@ export class DisciplinesService {
 
     //Injecting getDisciplineByIdProvider
     private readonly getDisciplineByIdProvider: GetDisciplineByIdProvider,
+
+    //Injecting getDisciplinesLinkedToAnIdProvider
+    private readonly getDisciplinesLinkedToAnIdProvider: GetDisciplinesLinkedToAnIdProvider,
 
     //Injecting paginationProvider
     private readonly paginationProvider: PaginationProvider,
@@ -128,6 +133,16 @@ export class DisciplinesService {
     return await this.deleteDisciplineStudentsByIdProvider.deleteDisciplineStudentsById(
       disciplineId,
       deleteStudentsDto,
+    );
+  }
+
+  public async getDisciplinesLinkedToAnId(
+    userId: number,
+    getLinkedDisciplinesByIdDto: GetLinkedDisciplinesByIdDto,
+  ) {
+    return await this.getDisciplinesLinkedToAnIdProvider.getDisciplinesLinkedToAnId(
+      userId,
+      getLinkedDisciplinesByIdDto.userType,
     );
   }
 }

@@ -30,8 +30,9 @@ export class GetUserByIdProvider {
 
     if (userType == UserType.STUDENT) {
       try {
-        user = await this.studentsRepository.findOneBy({
-          id: id,
+        user = await this.studentsRepository.findOne({
+          where: { id: id },
+          relations: ['disciplines'],
         });
       } catch (error) {
         throw new RequestTimeoutException(error, {
@@ -40,8 +41,9 @@ export class GetUserByIdProvider {
       }
     } else {
       try {
-        user = await this.teachersRepository.findOneBy({
-          id: id,
+        user = await this.teachersRepository.findOne({
+          where: { id: id },
+          relations: ['disciplines'],
         });
       } catch (error) {
         throw new RequestTimeoutException(error, {

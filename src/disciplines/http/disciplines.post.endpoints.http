@@ -1,11 +1,11 @@
 POST http://localhost:8000/disciplines
 Content-Type: application/json
-Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiQWRsZXJAZW1haWwuY29tIiwidXNlclR5cGUiOiJwcm9mZXNzb3IiLCJpYXQiOjE3MzIyOTE4MDUsImV4cCI6MTczMjI5NTQwNSwiYXVkIjoibG9jYWxob3N0OjgwMDAiLCJpc3MiOiJsb2NhbGhvc3Q6ODAwMCJ9.H85jHXWN6hCr8cqB4A3JaiA3yYfXlc_LajWjBXzcWTU
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiQWRsZXJAZW1haWwuY29tIiwidXNlclR5cGUiOiJwcm9mZXNzb3IiLCJpYXQiOjE3MzI1MDU4NjgsImV4cCI6MTczMjUwOTQ2OCwiYXVkIjoibG9jYWxob3N0OjgwMDAiLCJpc3MiOiJsb2NhbGhvc3Q6ODAwMCJ9.5e4ePQawMA5__CdjvnRep7FnTlkM5eP-L3kZIgDE4Hg
 {
-    "name" :"Cálculo C",
-    "code":"MAT00C",
+    "name" :"Sistemas Embarcados",
+    "code":"C6C872",
     "ipCamera":"192.168.1.103"
-}~
+}
 
 POST http://localhost:8000/disciplines/16/students
 Content-Type: application/json

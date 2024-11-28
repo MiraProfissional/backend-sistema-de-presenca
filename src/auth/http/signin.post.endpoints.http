@@ -2,7 +2,7 @@ POST http://localhost:8000/auth/sign-in
 Content-Type: application/json
 
 {
-    "email":"Adler@email.com",
+    "email":"DaniloCanuto@email.com",
     "password":"Prodessor@1"
 }
 

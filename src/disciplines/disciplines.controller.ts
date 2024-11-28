@@ -18,6 +18,7 @@ import { GetDisciplinesParamDto } from './dtos/get-disciplines-param.dto';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { UpdateDisciplineDto } from './dtos/update-discipline.dto';
 import { AddStudentsDto } from './dtos/add-students.dto';
+import { GetLinkedDisciplinesByIdDto } from './dtos/get-linked-disciplines-by-id.dto';
 
 @Controller('disciplines')
 export class DisciplinesController {
@@ -128,6 +129,17 @@ export class DisciplinesController {
     return this.disciplinesService.addDisciplineStudentById(
       disciplineId,
       deleteStudentsDto,
+    );
+  }
+
+  @Get('/linked-disciplines/:userId')
+  public getDisciplinesLinkedId(
+    @Param('userId', ParseIntPipe) disciplineId: number,
+    @Query() getLinkedDisciplinesByIdDto: GetLinkedDisciplinesByIdDto,
+  ) {
+    return this.disciplinesService.getDisciplinesLinkedToAnId(
+      disciplineId,
+      getLinkedDisciplinesByIdDto,
     );
   }
 }
