@@ -46,6 +46,24 @@ export class DisciplinesController {
   }
 
   @ApiOperation({
+    summary: 'Get all disciplines linked to an user (professor or aluno)',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Disciplines fetched  successfully',
+  })
+  @Get('/linked-disciplines/:userId')
+  public getDisciplinesLinkedId(
+    @Param('userId', ParseIntPipe) disciplineId: number,
+    @Query() getLinkedDisciplinesByIdDto: GetLinkedDisciplinesByIdDto,
+  ) {
+    return this.disciplinesService.getDisciplinesLinkedToAnId(
+      disciplineId,
+      getLinkedDisciplinesByIdDto,
+    );
+  }
+
+  @ApiOperation({
     summary: 'Create a discipline on the application',
   })
   @ApiResponse({
@@ -129,17 +147,6 @@ export class DisciplinesController {
     return this.disciplinesService.addDisciplineStudentById(
       disciplineId,
       deleteStudentsDto,
-    );
-  }
-
-  @Get('/linked-disciplines/:userId')
-  public getDisciplinesLinkedId(
-    @Param('userId', ParseIntPipe) disciplineId: number,
-    @Query() getLinkedDisciplinesByIdDto: GetLinkedDisciplinesByIdDto,
-  ) {
-    return this.disciplinesService.getDisciplinesLinkedToAnId(
-      disciplineId,
-      getLinkedDisciplinesByIdDto,
     );
   }
 }
