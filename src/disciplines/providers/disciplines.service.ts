@@ -19,39 +19,33 @@ import { AddStudentsToOneDisciplineProvider } from './add-students-to-one-discip
 import { DeleteDisciplineStudentsByIdProvider } from './delete-discipline-students-by-id.provider';
 import { GetLinkedDisciplinesByIdDto } from '../dtos/get-linked-disciplines-by-id.dto';
 import { GetDisciplinesLinkedToAnIdProvider } from './get-disciplines-linked-to-an-id.provider';
+import { ConnectDisciplineCameraDto } from '../dtos/connect-discipline-camera.dto';
+import { ConnectDisciplineCameraProvider } from './connect-discipline-camera.provider';
 
 @Injectable()
 export class DisciplinesService {
   constructor(
-    //Injecting addStudentsToOneDisciplineProvider
     private readonly addStudentsToOneDisciplineProvider: AddStudentsToOneDisciplineProvider,
 
-    //Injecting createDisciplineProvider
+    private readonly connectDisciplineCameraProvider: ConnectDisciplineCameraProvider,
+
     private readonly createDisciplineProvider: CreateDisciplineProvider,
 
-    //Injecting deleteDisciplineByIdProvider
     private readonly deleteDisciplineByIdProvider: DeleteDisciplineByIdProvider,
 
-    //Injecting deleteDisciplineStudentsByIdProvider
     private readonly deleteDisciplineStudentsByIdProvider: DeleteDisciplineStudentsByIdProvider,
 
-    //Injecting disciplinesRepository
     @InjectRepository(Discipline)
     private readonly disciplinesRepository: Repository<Discipline>,
 
-    //Injecting getDisciplineByIdProvider
     private readonly getDisciplineByIdProvider: GetDisciplineByIdProvider,
 
-    //Injecting getDisciplinesLinkedToAnIdProvider
     private readonly getDisciplinesLinkedToAnIdProvider: GetDisciplinesLinkedToAnIdProvider,
 
-    //Injecting paginationProvider
     private readonly paginationProvider: PaginationProvider,
 
-    //Injecting softDeleteDisciplineByIdProvider
     private readonly softDeleteDisciplineByIdProvider: SoftDeleteDisciplineByIdProvider,
 
-    //Injecting updateDisciplineProvider
     private readonly updateDisciplineProvider: UpdateDisciplineProvider,
   ) {}
 
@@ -143,6 +137,14 @@ export class DisciplinesService {
     return await this.getDisciplinesLinkedToAnIdProvider.getDisciplinesLinkedToAnId(
       userId,
       getLinkedDisciplinesByIdDto.userType,
+    );
+  }
+
+  public async connectDisciplineCamera(
+    connectDisciplineCameraDto: ConnectDisciplineCameraDto,
+  ) {
+    return await this.connectDisciplineCameraProvider.connectDisciplineCamera(
+      connectDisciplineCameraDto,
     );
   }
 }

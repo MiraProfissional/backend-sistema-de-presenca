@@ -13,6 +13,7 @@ import { SoftDeleteDisciplineByIdProvider } from './providers/soft-delete-discip
 import { AddStudentsToOneDisciplineProvider } from './providers/add-students-to-one-discipline.provider';
 import { DeleteDisciplineStudentsByIdProvider } from './providers/delete-discipline-students-by-id.provider';
 import { GetDisciplinesLinkedToAnIdProvider } from './providers/get-disciplines-linked-to-an-id.provider';
+import { ConnectDisciplineCameraProvider } from './providers/connect-discipline-camera.provider';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { GetDisciplinesLinkedToAnIdProvider } from './providers/get-disciplines-
     AddStudentsToOneDisciplineProvider,
     DeleteDisciplineStudentsByIdProvider,
     GetDisciplinesLinkedToAnIdProvider,
+    ConnectDisciplineCameraProvider,
   ],
   exports: [DisciplinesService],
 })
