@@ -16,11 +16,13 @@ import { GetDisciplinesLinkedToAnIdProvider } from './providers/get-disciplines-
 import { ConnectDisciplineCameraProvider } from './providers/connect-discipline-camera.provider';
 import cameraRouteConfig from './config/camera-route.config';
 import { ConfigModule } from '@nestjs/config';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Discipline]),
     ConfigModule.forFeature(cameraRouteConfig),
+    HttpModule,
     UsersModule,
     PaginationModule,
   ],

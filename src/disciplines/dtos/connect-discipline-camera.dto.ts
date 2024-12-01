@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString, Matches } from 'class-validator';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class ConnectDisciplineCameraDto {
   @ApiProperty({
@@ -11,12 +11,10 @@ export class ConnectDisciplineCameraDto {
   idDiscipline: number;
 
   @ApiProperty({
-    description: 'This is how much time the camera will be on',
-    example: '00:15:00',
+    description: 'This is how much time the camera will be on in seconds',
+    example: 3600,
   })
-  @IsString()
-  @Matches(/^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/, {
-    message: 'Time must be in the format HH:mm:ss',
-  })
-  timeCameraOn: string;
+  @IsNumber()
+  @IsNotEmpty()
+  timeCameraOn: number;
 }

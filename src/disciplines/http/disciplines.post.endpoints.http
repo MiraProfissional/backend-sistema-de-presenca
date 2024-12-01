@@ -16,8 +16,8 @@ Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIj
 
 POST http://localhost:8000/disciplines/connect-camera
 Content-Type: application/json
-Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgsImVtYWlsIjoiRGFuaWxvQ2FudXRvQGVtYWlsLmNvbSIsInVzZXJUeXBlIjoicHJvZmVzc29yIiwiaWF0IjoxNzMzMDg0NzkwLCJleHAiOjE3MzMwODgzOTAsImF1ZCI6ImxvY2FsaG9zdDo4MDAwIiwiaXNzIjoibG9jYWxob3N0OjgwMDAifQ.WCWRGrsVUbdcPxdAyi6xO4rt85NRDSz7HJvPD5lH06E
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgsImVtYWlsIjoiRGFuaWxvQ2FudXRvQGVtYWlsLmNvbSIsInVzZXJUeXBlIjoicHJvZmVzc29yIiwiaWF0IjoxNzMzMDg4NjcyLCJleHAiOjE3MzMwOTIyNzIsImF1ZCI6ImxvY2FsaG9zdDo4MDAwIiwiaXNzIjoibG9jYWxob3N0OjgwMDAifQ.z6xUhvMeF6jvN_32uTbvXuX7-UsDBOSGUcAe1UCsBVc
 {
     "idDiscipline": 1,
-    "timeCameraOn": "00:15:00"
+    "timeCameraOn": 10
 }
