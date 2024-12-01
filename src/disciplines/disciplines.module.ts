@@ -14,10 +14,13 @@ import { AddStudentsToOneDisciplineProvider } from './providers/add-students-to-
 import { DeleteDisciplineStudentsByIdProvider } from './providers/delete-discipline-students-by-id.provider';
 import { GetDisciplinesLinkedToAnIdProvider } from './providers/get-disciplines-linked-to-an-id.provider';
 import { ConnectDisciplineCameraProvider } from './providers/connect-discipline-camera.provider';
+import cameraRouteConfig from './config/camera-route.config';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Discipline]),
+    ConfigModule.forFeature(cameraRouteConfig),
     UsersModule,
     PaginationModule,
   ],
