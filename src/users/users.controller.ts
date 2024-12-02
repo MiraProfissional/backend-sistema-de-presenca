@@ -7,6 +7,8 @@ import {
   Body,
   Patch,
   Delete,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { UsersService } from './providers/users.service';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -23,6 +25,7 @@ import { DeleteUsersQueryDto } from './dtos/users/delete-user.dto';
 
 @Controller('users')
 @ApiTags('Users')
+@UseInterceptors(ClassSerializerInterceptor)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {} // Injecting Users Service
 
