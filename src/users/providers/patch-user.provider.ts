@@ -72,10 +72,10 @@ export class PatchUserProvider {
       : user.dateBirth;
     user.cpf = patchUserDto.cpf ?? user.cpf;
     user.cellphone = patchUserDto.cellphone ?? user.cellphone;
+    user.registrationNumber =
+      patchUserDto.registrationNumber ?? user.registrationNumber;
 
     if (user instanceof Student) {
-      user.registration =
-        (patchUserDto as PatchStudentDto).registration ?? user.registration;
       user.course = (patchUserDto as PatchStudentDto).course ?? user.course;
 
       try {
@@ -86,9 +86,6 @@ export class PatchUserProvider {
         });
       }
     } else if (user instanceof Teacher) {
-      user.identifier =
-        (patchUserDto as PatchTeacherDto).identifier ?? user.identifier;
-
       try {
         await this.teachersRepository.save(user);
       } catch (error) {

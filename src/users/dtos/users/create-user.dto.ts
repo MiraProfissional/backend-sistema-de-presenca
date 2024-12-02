@@ -7,6 +7,7 @@ import {
   IsEmail,
   Matches,
   IsISO8601,
+  IsInt,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -69,4 +70,12 @@ export class CreateUserDto {
   @IsNotEmpty()
   @MinLength(11)
   cellphone: string;
+
+  @ApiProperty({
+    description: "This is the user's identifier number",
+    example: 123456789,
+  })
+  @IsInt()
+  @IsNotEmpty()
+  registrationNumber: number;
 }

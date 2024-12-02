@@ -6,13 +6,6 @@ import { Class } from 'src/classes/class.entity';
 @Entity()
 export class Student extends User {
   @Column({
-    type: 'int',
-    nullable: false,
-    unique: true,
-  })
-  registration: number;
-
-  @Column({
     type: 'varchar',
     nullable: false,
   })
