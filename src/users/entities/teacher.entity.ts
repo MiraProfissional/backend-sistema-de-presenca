@@ -4,8 +4,12 @@ import { Discipline } from 'src/disciplines/discipline.entity';
 
 @Entity()
 export class Teacher extends User {
-  @Column()
-  identifier: string;
+  @Column({
+    type: 'int',
+    nullable: false,
+    unique: true,
+  })
+  identifier: number;
 
   @OneToMany(() => Discipline, (discipline) => discipline.teacher)
   disciplines: Discipline[];
