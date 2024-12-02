@@ -13,6 +13,7 @@ import { Student } from './entities/student.entity';
 import { Teacher } from './entities/teacher.entity';
 import { User } from './entities/user.entity';
 import { FindUsersByIdProvider } from './providers/find-users-by-id.provider';
+import { GetUsersByRegistrationNumberProvider } from './providers/get-users-by-registration-number.provider';
 
 @Module({
   controllers: [UsersController],
@@ -24,6 +25,7 @@ import { FindUsersByIdProvider } from './providers/find-users-by-id.provider';
     PatchUserProvider,
     DeleteUserByIdProvider,
     FindUsersByIdProvider,
+    GetUsersByRegistrationNumberProvider,
   ],
   imports: [
     forwardRef(() => AuthModule),

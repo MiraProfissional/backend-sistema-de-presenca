@@ -1,0 +1,15 @@
+POST http://localhost:8000/classes
+Content-Type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzLCJlbWFpbCI6IkNsZWlkZUBlbWFpbC5jb20iLCJ1c2VyVHlwZSI6InByb2Zlc3NvciIsImlhdCI6MTczMzE3MjA2NywiZXhwIjoxNzMzMTc1NjY3LCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.W20p8XRLV6OE-MVbqhF-VM1XzAIMgAge2vD3eDl-bqc
+{
+    "timeCameraWasOn": 15,
+    "disciplineId":26
+}
+
+POST http://localhost:8000/classes/receive-students
+Content-Type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzLCJlbWFpbCI6IkNsZWlkZUBlbWFpbC5jb20iLCJ1c2VyVHlwZSI6InByb2Zlc3NvciIsImlhdCI6MTczMzE3MjA2NywiZXhwIjoxNzMzMTc1NjY3LCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.W20p8XRLV6OE-MVbqhF-VM1XzAIMgAge2vD3eDl-bqc
+{
+    "presentStudents":[2021014100,2021014102],
+    "classId": 2
+}

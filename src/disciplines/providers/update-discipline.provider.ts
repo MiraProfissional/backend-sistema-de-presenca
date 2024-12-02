@@ -38,6 +38,9 @@ export class UpdateDisciplineProvider {
     discipline.name = updateDisciplineDto.name ?? discipline.name;
     discipline.code = updateDisciplineDto.code ?? discipline.code;
     discipline.ipCamera = updateDisciplineDto.ipCamera ?? discipline.ipCamera;
+    discipline.startTime =
+      updateDisciplineDto.startTime ?? discipline.startTime;
+    discipline.endTime = updateDisciplineDto.endTime ?? discipline.endTime;
 
     try {
       await this.disciplinesRepository.save(discipline);

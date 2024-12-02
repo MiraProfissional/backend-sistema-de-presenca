@@ -9,6 +9,7 @@ import { Repository } from 'typeorm';
 import { CreateDisciplineDto } from '../dtos/create-discipline.dto';
 import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
 import { UsersService } from 'src/users/providers/users.service';
+import { Teacher } from 'src/users/entities/teacher.entity';
 
 @Injectable()
 export class CreateDisciplineProvider {
@@ -26,9 +27,17 @@ export class CreateDisciplineProvider {
   ) {
     let existingDiscipline: Discipline | undefined = undefined;
 
+    let teacher: Teacher | undefined = undefined;
+
+    teacher = await this.usersService.findOneUserById(user.sub, user.userType);
+
     try {
       existingDiscipline = await this.disciplinesRepository.findOne({
-        where: { name: createDisciplineDto.name },
+        where: {
+          teacher: teacher,
+          startTime: createDisciplineDto.startTime,
+          endTime: createDisciplineDto.endTime,
+        },
       });
     } catch (error) {
       throw new RequestTimeoutException(error, {
@@ -38,14 +47,9 @@ export class CreateDisciplineProvider {
 
     if (existingDiscipline) {
       throw new ConflictException(
-        'The discipline already exists. Please, check the name',
+        'A discipline with the same start time, end time, and teacher already exists.',
       );
     }
-
-    const teacher = await this.usersService.findOneUserById(
-      user.sub,
-      user.userType,
-    );
 
     const newDiscipline = this.disciplinesRepository.create({
       ...createDisciplineDto,

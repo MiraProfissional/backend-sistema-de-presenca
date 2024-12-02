@@ -1,17 +1,17 @@
 PATCH http://localhost:8000/users/professores
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgsImVtYWlsIjoiRGFuaWxvQ2FudXRvQGVtYWlsLmNvbSIsInVzZXJUeXBlIjoicHJvZmVzc29yIiwiaWF0IjoxNzMzMDk0OTE4LCJleHAiOjE3MzMwOTg1MTgsImF1ZCI6ImxvY2FsaG9zdDo4MDAwIiwiaXNzIjoibG9jYWxob3N0OjgwMDAifQ.b-9GhEiZHDlawhscGCXwC97h31gsF9MiqNQ3AQw7z30
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE1LCJlbWFpbCI6Ik1pcmFAZW1haWwuY29tIiwidXNlclR5cGUiOiJhbHVubyIsImlhdCI6MTczMzE1NTM2MywiZXhwIjoxNzMzMTU4OTYzLCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.eELJ3l2azMe4HHgPJA5BSNRIEj1rO5TCcomNRuoO9eI
 
 {
-    "id": 9,
-    "email":"johndoetest1@email.com"
+    "id": 12,
+    "email":"johndoetest3@email.com"
 }
 
 PATCH http://localhost:8000/users/alunos
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgsImVtYWlsIjoiRGFuaWxvQ2FudXRvQGVtYWlsLmNvbSIsInVzZXJUeXBlIjoicHJvZmVzc29yIiwiaWF0IjoxNzMzMDk2NjAxLCJleHAiOjE3MzMxMDAyMDEsImF1ZCI6ImxvY2FsaG9zdDo4MDAwIiwiaXNzIjoibG9jYWxob3N0OjgwMDAifQ.9zm8Hu7E-8Df792iK6LYGPGiIBInnwcu8kNvpBRTOh0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE1LCJlbWFpbCI6Ik1pcmFAZW1haWwuY29tIiwidXNlclR5cGUiOiJhbHVubyIsImlhdCI6MTczMzE1NTM2MywiZXhwIjoxNzMzMTU4OTYzLCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.eELJ3l2azMe4HHgPJA5BSNRIEj1rO5TCcomNRuoO9eI
 
 {
-    "id": 13,
-    "email":"johndoetest3@email.com"
+    "id": 15,
+    "registrationNumber":2021014100
 }

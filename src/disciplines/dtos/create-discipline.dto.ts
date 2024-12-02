@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  Matches,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class CreateDisciplineDto {
   @ApiProperty({
@@ -30,4 +36,24 @@ export class CreateDisciplineDto {
   @IsString()
   @IsNotEmpty()
   ipCamera: string;
+
+  @ApiProperty({
+    description: 'Start time of the discipline (HH:MM format)',
+    example: '07:55',
+  })
+  @IsNotEmpty()
+  @Matches(/^([0-1]\d|2[0-3]):([0-5]\d)$/, {
+    message: 'startTime must be in the format HH:MM',
+  })
+  startTime: string;
+
+  @ApiProperty({
+    description: 'End time of the discipline (HH:MM format)',
+    example: '9:45',
+  })
+  @IsNotEmpty()
+  @Matches(/^([0-1]\d|2[0-3]):([0-5]\d)$/, {
+    message: 'endTime must be in the format HH:MM',
+  })
+  endTime: string;
 }

@@ -53,6 +53,13 @@ export abstract class User {
   })
   cellphone: string;
 
+  @Column({
+    type: 'int',
+    nullable: false,
+    unique: true,
+  })
+  registrationNumber: number;
+
   @CreateDateColumn()
   createDate: Date;
 

@@ -1,3 +1,4 @@
+import { Class } from 'src/classes/class.entity';
 import { Student } from 'src/users/entities/student.entity';
 import { Teacher } from 'src/users/entities/teacher.entity';
 import {
@@ -8,11 +9,14 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
+@Unique(['startTime', 'endTime', 'teacher'])
 export class Discipline {
   @PrimaryGeneratedColumn()
   id: number;
@@ -20,7 +24,6 @@ export class Discipline {
   @Column({
     type: 'varchar',
     length: 96,
-    unique: true,
     nullable: false,
   })
   name: string;
@@ -28,7 +31,6 @@ export class Discipline {
   @Column({
     type: 'varchar',
     length: 12,
-    unique: true,
     nullable: false,
   })
   code: string;
@@ -38,6 +40,18 @@ export class Discipline {
     nullable: false,
   })
   ipCamera: string;
+
+  @Column({
+    type: 'time',
+    nullable: false,
+  })
+  startTime: string;
+
+  @Column({
+    type: 'time',
+    nullable: false,
+  })
+  endTime: string;
 
   @ManyToOne(() => Teacher, (teacher) => teacher.disciplines, {
     eager: true,
@@ -51,6 +65,9 @@ export class Discipline {
   })
   @JoinTable()
   students?: Student[];
+
+  @OneToMany(() => Class, (classe) => classe.discipline)
+  classes: Class[];
 
   @CreateDateColumn()
   createDate: Date;

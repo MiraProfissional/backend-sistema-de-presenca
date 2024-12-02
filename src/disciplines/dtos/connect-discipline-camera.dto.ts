@@ -8,7 +8,7 @@ export class ConnectDisciplineCameraDto {
   })
   @IsNumber()
   @IsNotEmpty()
-  idDiscipline: number;
+  disciplineId: number;
 
   @ApiProperty({
     description: 'This is how much time the camera will be on in seconds',

@@ -22,50 +22,38 @@ import { Student } from '../entities/student.entity';
 import { DeleteUsersQueryDto } from '../dtos/users/delete-user.dto';
 import { FindOneUserByEmailProvider } from './find-one-user-by-email.provider';
 import { FindUsersByIdProvider } from './find-users-by-id.provider';
+import { GetUsersByRegistrationNumberProvider } from './get-users-by-registration-number.provider';
 
 /** Class to connect to Users table and perform business operations */
 @Injectable()
 export class UsersService {
-  /** The constructor to connect AuthService with UsersService by Dependency Injection*/
   constructor(
     @Inject(forwardRef(() => AuthService))
     private readonly authService: AuthService,
 
-    /* 
-    Injecting teachersRepository
-    */
+    private readonly createUserProvider: CreateUserProvider,
+
+    private readonly deleteUserByIdProvider: DeleteUserByIdProvider,
+
+    private readonly findOneUserByEmail: FindOneUserByEmailProvider,
+
+    private readonly findUsersByIdProvider: FindUsersByIdProvider,
+
+    private readonly getUserByIdProvider: GetUserByIdProvider,
+
+    private readonly getUsersByRegistrationNumberProvider: GetUsersByRegistrationNumberProvider,
+
     @InjectRepository(Teacher)
     private readonly teachersRepository: Repository<Teacher>,
 
-    /* 
-    Injecting studentsRepository
-    */
     @InjectRepository(Student)
     private readonly studentsRepository: Repository<Student>,
 
-    // Inject findOneUserByEmail
-    private readonly findOneUserByEmail: FindOneUserByEmailProvider,
-
-    // Inject createUserProvider
-    private readonly createUserProvider: CreateUserProvider,
-
-    //Injecting getUserByIdProvider
-    private readonly getUserByIdProvider: GetUserByIdProvider,
-
-    //Injecting findUsersByIdProvider
-    private readonly findUsersByIdProvider: FindUsersByIdProvider,
-
-    //Injecting paginationProvider
     private readonly paginationProvider: PaginationProvider,
 
-    //Injecting patchUserProvider
     private readonly patchUserProvider: PatchUserProvider,
-
-    //Injecting deleteUserByIdProvider
-    private readonly deleteUserByIdProvider: DeleteUserByIdProvider,
   ) {}
 
-  // Creating function for create users in the database
   public async createUser(
     userType: UserType,
     createUserDto: CreateTeacherDto | CreateStudentDto,
@@ -167,7 +155,23 @@ export class UsersService {
     );
   }
 
-  public async findUsersById(ids: number[]) {
-    return await this.findUsersByIdProvider.findUsersById(ids);
+  public async findStudentsById(ids: number[]) {
+    return this.findUsersByIdProvider.findStudentsById(ids);
+  }
+
+  public async findTeachersById(ids: number[]) {
+    return this.findUsersByIdProvider.findTeachersById(ids);
+  }
+
+  public async findStudentsByRegistrationNumber(registrationNumbers: number[]) {
+    return await this.getUsersByRegistrationNumberProvider.findStudentsByRegistrationNumber(
+      registrationNumbers,
+    );
+  }
+
+  public async findTeachersByRegistrationNumber(registrationNumbers: number[]) {
+    return await this.getUsersByRegistrationNumberProvider.findTeachersByRegistrationNumber(
+      registrationNumbers,
+    );
   }
 }

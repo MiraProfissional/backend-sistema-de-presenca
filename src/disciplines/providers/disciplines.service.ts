@@ -64,18 +64,14 @@ export class DisciplinesService {
     paginationQueryDto: PaginationQueryDto,
   ) {
     if (getDisciplinesParamDto.id) {
-      return this.findOneDisciplineById(getDisciplinesParamDto);
+      return this.findOneDisciplineById(getDisciplinesParamDto.id);
     } else {
       return this.findAllDisciplines(paginationQueryDto);
     }
   }
 
-  public async findOneDisciplineById(
-    getDisciplinesParamDto: GetDisciplinesParamDto,
-  ): Promise<Discipline> {
-    return await this.getDisciplineByIdProvider.getDisciplineById(
-      getDisciplinesParamDto.id,
-    );
+  public async findOneDisciplineById(id: number): Promise<Discipline> {
+    return await this.getDisciplineByIdProvider.getDisciplineById(id);
   }
 
   public async findAllDisciplines(
