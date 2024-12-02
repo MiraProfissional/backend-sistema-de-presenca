@@ -15,6 +15,7 @@ import jwtConfig from './auth/config/jwt.config';
 import { JwtModule } from '@nestjs/jwt';
 import { PaginationModule } from './common/pagination/pagination.module';
 import { DisciplinesModule } from './disciplines/disciplines.module';
+import { ClassesModule } from './classes/classes.module';
 
 const ENV = process.env.NODE_ENV;
 
@@ -53,6 +54,7 @@ const ENV = process.env.NODE_ENV;
     ConfigModule.forFeature(jwtConfig),
     JwtModule.registerAsync(jwtConfig.asProvider()),
     DisciplinesModule,
+    ClassesModule,
   ],
   controllers: [AppController],
   providers: [

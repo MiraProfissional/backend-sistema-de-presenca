@@ -1,3 +1,4 @@
+import { Class } from 'src/classes/class.entity';
 import { Student } from 'src/users/entities/student.entity';
 import { Teacher } from 'src/users/entities/teacher.entity';
 import {
@@ -8,6 +9,7 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -51,6 +53,9 @@ export class Discipline {
   })
   @JoinTable()
   students?: Student[];
+
+  @OneToMany(() => Class, (classe) => classe.discipline)
+  classes: Class[];
 
   @CreateDateColumn()
   createDate: Date;
