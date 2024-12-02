@@ -46,7 +46,7 @@ export class AddStudentsToOneDisciplineProvider {
     let students: Student[] = [];
 
     try {
-      students = await this.usersService.findUsersById(
+      students = await this.usersService.findStudentsById(
         addStudentsDto.studentsId,
       );
     } catch (error) {

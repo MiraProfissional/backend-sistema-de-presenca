@@ -32,11 +32,7 @@ export class GetDisciplinesLinkedToAnIdProvider {
       });
     }
 
-    console.log('user', user);
-
     const disciplineIds = user.disciplines.map((discipline) => discipline.id);
-
-    console.log('disciplineIds', disciplineIds);
 
     let disciplines: Discipline[] = [];
 

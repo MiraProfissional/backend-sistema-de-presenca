@@ -46,7 +46,7 @@ export class DeleteDisciplineStudentsByIdProvider {
     let studentsToRemove: Student[] = [];
 
     try {
-      studentsToRemove = await this.usersService.findUsersById(
+      studentsToRemove = await this.usersService.findStudentsById(
         addStudentsDto.studentsId,
       );
     } catch (error) {
