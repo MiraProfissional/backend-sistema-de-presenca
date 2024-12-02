@@ -1,0 +1,6 @@
+POST http://localhost:8000/classes/receive-students
+Content-Type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgsImVtYWlsIjoiRGFuaWxvQ2FudXRvQGVtYWlsLmNvbSIsInVzZXJUeXBlIjoicHJvZmVzc29yIiwiaWF0IjoxNzMzMTAyNDQ4LCJleHAiOjE3MzMxMDYwNDgsImF1ZCI6ImxvY2FsaG9zdDo4MDAwIiwiaXNzIjoibG9jYWxob3N0OjgwMDAifQ.FvNzIcnh-jRfE26IhBtxz0274wfGjmhKslFonQL-P0Q
+{
+    "presentStudents":[2021014100,222222222,333333333]
+}
