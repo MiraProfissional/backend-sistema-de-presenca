@@ -42,16 +42,15 @@ export class CreateClassProvider {
     const newClass = this.classesRepository.create({
       ...createClassDto,
       date: date,
+      discipline: discipline,
     });
 
-    return newClass;
-
-    // try {
-    //   return await this.classesRepository.save(newClass);
-    // } catch (error) {
-    //   throw new RequestTimeoutException(error, {
-    //     description: 'Error connecting to the database',
-    //   });
-    // }
+    try {
+      return await this.classesRepository.save(newClass);
+    } catch (error) {
+      throw new RequestTimeoutException(error, {
+        description: 'Error connecting to the database',
+      });
+    }
   }
 }

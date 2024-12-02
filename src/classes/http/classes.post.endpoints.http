@@ -1,9 +1,9 @@
 POST http://localhost:8000/classes
 Content-Type: application/json
-Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgsImVtYWlsIjoiRGFuaWxvQ2FudXRvQGVtYWlsLmNvbSIsInVzZXJUeXBlIjoicHJvZmVzc29yIiwiaWF0IjoxNzMzMTAyNDQ4LCJleHAiOjE3MzMxMDYwNDgsImF1ZCI6ImxvY2FsaG9zdDo4MDAwIiwiaXNzIjoibG9jYWxob3N0OjgwMDAifQ.FvNzIcnh-jRfE26IhBtxz0274wfGjmhKslFonQL-P0Q
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzLCJlbWFpbCI6IkNsZWlkZUBlbWFpbC5jb20iLCJ1c2VyVHlwZSI6InByb2Zlc3NvciIsImlhdCI6MTczMzE1NzYzNSwiZXhwIjoxNzMzMTYxMjM1LCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.KTJILOzYbF9upYci3LwbITtQsG8tshjqwXdZoQqDt-8
 {
     "timeCameraWasOn": 15,
-    "disciplineId":1
+    "disciplineId":27
 }
 
 POST http://localhost:8000/classes/receive-students
