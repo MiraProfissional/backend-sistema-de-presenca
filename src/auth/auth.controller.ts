@@ -48,6 +48,13 @@ export class AuthController {
     return this.authService.refreshToken(refreshTokenDto);
   }
 
+  @ApiOperation({
+    summary: "Returns the user's payload",
+  })
+  @ApiResponse({
+    status: 200,
+    description: "User's payload returned successfully",
+  })
   @Get('me')
   public me(@ActiveUser() user: ActiveUserData) {
     return this.authService.getUserInformation(user);
