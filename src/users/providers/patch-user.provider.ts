@@ -13,24 +13,16 @@ import { Teacher } from '../entities/teacher.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Student } from '../entities/student.entity';
 import { HashingProvider } from 'src/auth/providers/hashing.provider';
-import { User } from '../entities/user.entity';
 
 @Injectable()
 export class PatchUserProvider {
   constructor(
-    //Injecting teacherRepository
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-
-    //Injecting teacherRepository
     @InjectRepository(Teacher)
-    private readonly teacherRepository: Repository<Teacher>,
+    private readonly teachersRepository: Repository<Teacher>,
 
-    //Injecting studentRepository
     @InjectRepository(Student)
-    private readonly studentRepository: Repository<Student>,
+    private readonly studentsRepository: Repository<Student>,
 
-    //Inject hashingProvider
     @Inject(forwardRef(() => HashingProvider))
     private readonly hashingProvider: HashingProvider,
   ) {}
@@ -39,19 +31,28 @@ export class PatchUserProvider {
     userType: UserType,
     patchUserDto: PatchTeacherDto | PatchStudentDto,
   ) {
-    let user = undefined;
+    let user: Teacher | Student | undefined = undefined;
 
-    try {
-      user = await this.userRepository.findOne({
-        where: { id: patchUserDto.id },
-      });
-    } catch {
-      throw new RequestTimeoutException(
-        'Unbale to process your request at the moment, please try later.',
-        {
-          description: 'Error connecting to the database.',
-        },
-      );
+    if (userType == UserType.STUDENT) {
+      try {
+        user = await this.studentsRepository.findOne({
+          where: { id: patchUserDto.id },
+        });
+      } catch (error) {
+        throw new RequestTimeoutException(error, {
+          description: 'Could not fetch the student user.',
+        });
+      }
+    } else {
+      try {
+        user = await this.teachersRepository.findOne({
+          where: { id: patchUserDto.id },
+        });
+      } catch (error) {
+        throw new RequestTimeoutException(error, {
+          description: 'Could not fetch the teacher user.',
+        });
+      }
     }
 
     if (!user) {
@@ -66,28 +67,30 @@ export class PatchUserProvider {
         patchUserDto.password,
       );
     }
-    user.dateBirth = patchUserDto.dateBirth ?? user.dateBirth;
+    user.dateBirth = patchUserDto.dateBirth
+      ? new Date(patchUserDto.dateBirth)
+      : user.dateBirth;
     user.cpf = patchUserDto.cpf ?? user.cpf;
     user.cellphone = patchUserDto.cellphone ?? user.cellphone;
 
-    if (userType == UserType.STUDENT) {
+    if (user instanceof Student) {
       user.registration =
         (patchUserDto as PatchStudentDto).registration ?? user.registration;
       user.course = (patchUserDto as PatchStudentDto).course ?? user.course;
 
       try {
-        await this.studentRepository.save(user);
+        await this.studentsRepository.save(user);
       } catch (error) {
         throw new RequestTimeoutException(error, {
           description: 'Error connecting to the database.',
         });
       }
-    } else if (userType == UserType.TEACHER) {
+    } else if (user instanceof Teacher) {
       user.identifier =
         (patchUserDto as PatchTeacherDto).identifier ?? user.identifier;
 
       try {
-        await this.teacherRepository.save(user);
+        await this.teachersRepository.save(user);
       } catch (error) {
         throw new RequestTimeoutException(error, {
           description: 'Error connecting to the database.',
