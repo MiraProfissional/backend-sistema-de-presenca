@@ -1,8 +1,8 @@
 POST http://localhost:8000/users/professores
 Content-Type: application/json
 {
-    "name" : "Danilo Canuto",
-    "email":"DaniloCanuto@email.com",
+    "name" : "Julia",
+    "email":"Julia@email.com",
     "password":"Prodessor@1",
     "dateBirth": "2001-03-16T07:46:32+00:00",
     "cpf":"44455566678",
@@ -13,10 +13,10 @@ Content-Type: application/json
 POST http://localhost:8000/users/alunos
 Content-Type: application/json
 {
-    "name" : "Bruno",
-    "email":"Bruno@email.com",
+    "name" : "Alice",
+    "email":"Alice@email.com",
     "password":"Alunos@1",
-    "dateBirth": "2001-03-16T07:46:32+00:00",
+    "dateBirth":"2001-03-16T07:46:32+00:00",
     "cpf":"44455566678",
     "cellphone":"12987654321",
     "registration": "2021014100",

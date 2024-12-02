@@ -13,10 +13,16 @@ import { SoftDeleteDisciplineByIdProvider } from './providers/soft-delete-discip
 import { AddStudentsToOneDisciplineProvider } from './providers/add-students-to-one-discipline.provider';
 import { DeleteDisciplineStudentsByIdProvider } from './providers/delete-discipline-students-by-id.provider';
 import { GetDisciplinesLinkedToAnIdProvider } from './providers/get-disciplines-linked-to-an-id.provider';
+import { ConnectDisciplineCameraProvider } from './providers/connect-discipline-camera.provider';
+import cameraRouteConfig from './config/camera-route.config';
+import { ConfigModule } from '@nestjs/config';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Discipline]),
+    ConfigModule.forFeature(cameraRouteConfig),
+    HttpModule,
     UsersModule,
     PaginationModule,
   ],
@@ -31,6 +37,7 @@ import { GetDisciplinesLinkedToAnIdProvider } from './providers/get-disciplines-
     AddStudentsToOneDisciplineProvider,
     DeleteDisciplineStudentsByIdProvider,
     GetDisciplinesLinkedToAnIdProvider,
+    ConnectDisciplineCameraProvider,
   ],
   exports: [DisciplinesService],
 })

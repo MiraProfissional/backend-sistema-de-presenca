@@ -1,7 +1,17 @@
 PATCH http://localhost:8000/users/professores
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgsImVtYWlsIjoiRGFuaWxvQ2FudXRvQGVtYWlsLmNvbSIsInVzZXJUeXBlIjoicHJvZmVzc29yIiwiaWF0IjoxNzMzMDk0OTE4LCJleHAiOjE3MzMwOTg1MTgsImF1ZCI6ImxvY2FsaG9zdDo4MDAwIiwiaXNzIjoibG9jYWxob3N0OjgwMDAifQ.b-9GhEiZHDlawhscGCXwC97h31gsF9MiqNQ3AQw7z30
 
 {
-    "id": 24,
-    "email":"johndoetest@email.com"
+    "id": 9,
+    "email":"johndoetest1@email.com"
+}
+
+PATCH http://localhost:8000/users/alunos
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgsImVtYWlsIjoiRGFuaWxvQ2FudXRvQGVtYWlsLmNvbSIsInVzZXJUeXBlIjoicHJvZmVzc29yIiwiaWF0IjoxNzMzMDk2NjAxLCJleHAiOjE3MzMxMDAyMDEsImF1ZCI6ImxvY2FsaG9zdDo4MDAwIiwiaXNzIjoibG9jYWxob3N0OjgwMDAifQ.9zm8Hu7E-8Df792iK6LYGPGiIBInnwcu8kNvpBRTOh0
+
+{
+    "id": 13,
+    "email":"johndoetest3@email.com"
 }

@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   ParseIntPipe,
   Patch,
@@ -19,6 +21,7 @@ import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.
 import { UpdateDisciplineDto } from './dtos/update-discipline.dto';
 import { AddStudentsDto } from './dtos/add-students.dto';
 import { GetLinkedDisciplinesByIdDto } from './dtos/get-linked-disciplines-by-id.dto';
+import { ConnectDisciplineCameraDto } from './dtos/connect-discipline-camera.dto';
 
 @Controller('disciplines')
 export class DisciplinesController {
@@ -42,6 +45,59 @@ export class DisciplinesController {
     return this.disciplinesService.getDiscplines(
       getDisciplinesParamDto,
       paginationQueryDto,
+    );
+  }
+
+  @ApiOperation({
+    summary: 'Get all disciplines linked to an user (professor or aluno)',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Disciplines fetched  successfully',
+  })
+  @Get('/linked-disciplines/:userId')
+  public getDisciplinesLinkedId(
+    @Param('userId', ParseIntPipe) disciplineId: number,
+    @Query() getLinkedDisciplinesByIdDto: GetLinkedDisciplinesByIdDto,
+  ) {
+    return this.disciplinesService.getDisciplinesLinkedToAnId(
+      disciplineId,
+      getLinkedDisciplinesByIdDto,
+    );
+  }
+
+  @ApiOperation({
+    summary: 'Add a student into a discipline',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Student added successfully',
+  })
+  @Post('/:disciplineId/students')
+  public addStudentToDiscipline(
+    @Param('disciplineId', ParseIntPipe) disciplineId: number,
+    @Body() addStudentsDto: AddStudentsDto,
+  ) {
+    return this.disciplinesService.addStudentsToDisciplineById(
+      disciplineId,
+      addStudentsDto,
+    );
+  }
+
+  @ApiOperation({
+    summary: "Turn on the discipline's camera",
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Camera turned on successfully',
+  })
+  @HttpCode(HttpStatus.OK)
+  @Post('connect-camera')
+  public connectDisciplineCamera(
+    @Body() connectDisciplineCameraDto: ConnectDisciplineCameraDto,
+  ) {
+    return this.disciplinesService.connectDisciplineCamera(
+      connectDisciplineCameraDto,
     );
   }
 
@@ -85,36 +141,6 @@ export class DisciplinesController {
   }
 
   @ApiOperation({
-    summary: 'Soft deletes a discipline on the application',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Discipline soft deleted successfully',
-  })
-  @Delete('soft-delete')
-  public softDeleteDisciplines(@Query('id', ParseIntPipe) id: number) {
-    return this.disciplinesService.softDeleteDisciplineById(id);
-  }
-
-  @ApiOperation({
-    summary: 'Add a student into a discipline',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Student added successfully',
-  })
-  @Post('/:disciplineId/students')
-  public addStudentToDiscipline(
-    @Param('disciplineId', ParseIntPipe) disciplineId: number,
-    @Body() addStudentsDto: AddStudentsDto,
-  ) {
-    return this.disciplinesService.addStudentsToDisciplineById(
-      disciplineId,
-      addStudentsDto,
-    );
-  }
-
-  @ApiOperation({
     summary: 'Removes a student from a discipline',
   })
   @ApiResponse({
@@ -132,14 +158,15 @@ export class DisciplinesController {
     );
   }
 
-  @Get('/linked-disciplines/:userId')
-  public getDisciplinesLinkedId(
-    @Param('userId', ParseIntPipe) disciplineId: number,
-    @Query() getLinkedDisciplinesByIdDto: GetLinkedDisciplinesByIdDto,
-  ) {
-    return this.disciplinesService.getDisciplinesLinkedToAnId(
-      disciplineId,
-      getLinkedDisciplinesByIdDto,
-    );
+  @ApiOperation({
+    summary: 'Soft deletes a discipline on the application',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Discipline soft deleted successfully',
+  })
+  @Delete('soft-delete')
+  public softDeleteDisciplines(@Query('id', ParseIntPipe) id: number) {
+    return this.disciplinesService.softDeleteDisciplineById(id);
   }
 }

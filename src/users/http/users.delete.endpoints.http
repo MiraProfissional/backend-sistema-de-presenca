@@ -1,2 +1,4 @@
 DELETE http://localhost:8000/users/
-?id=26
+?id=13
+&userType=aluno
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgsImVtYWlsIjoiRGFuaWxvQ2FudXRvQGVtYWlsLmNvbSIsInVzZXJUeXBlIjoicHJvZmVzc29yIiwiaWF0IjoxNzMzMDk2Nzk2LCJleHAiOjE3MzMxMDAzOTYsImF1ZCI6ImxvY2FsaG9zdDo4MDAwIiwiaXNzIjoibG9jYWxob3N0OjgwMDAifQ.0StwuCvmK0tw36XARULglEvrVe1W9bWJ12YqtaviKmM
