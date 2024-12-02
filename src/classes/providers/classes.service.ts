@@ -21,6 +21,7 @@ export class ClassesService {
   ) {
     return await this.addPresentStudentsProvider.addPresentStudentsByRegistrationNumber(
       presentStudentsDto.presentStudents,
+      presentStudentsDto.classId,
     );
   }
 }

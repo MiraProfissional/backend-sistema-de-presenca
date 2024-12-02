@@ -3,6 +3,7 @@ import { Student } from 'src/users/entities/student.entity';
 import {
   Column,
   Entity,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -25,9 +26,12 @@ export class Class {
   })
   timeCameraWasOn: number;
 
-  @ManyToOne(() => Discipline, (discipline) => discipline.classes)
+  @ManyToOne(() => Discipline, (discipline) => discipline.classes, {
+    eager: true,
+  })
   discipline: Discipline;
 
   @ManyToMany(() => Student, (student) => student.classes, { eager: true })
+  @JoinTable()
   presentStudents?: Student[];
 }

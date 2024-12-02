@@ -13,4 +13,12 @@ export class PresentStudentsDto {
   @IsNotEmpty()
   @IsInt({ each: true })
   presentStudents: number[];
+
+  @ApiProperty({
+    description: 'This is the id of the discipline',
+    example: 27,
+  })
+  @IsInt()
+  @IsNotEmpty()
+  classId: number;
 }
