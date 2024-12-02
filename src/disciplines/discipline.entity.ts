@@ -11,10 +11,12 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
+@Unique(['startTime', 'endTime', 'teacher'])
 export class Discipline {
   @PrimaryGeneratedColumn()
   id: number;
@@ -22,7 +24,6 @@ export class Discipline {
   @Column({
     type: 'varchar',
     length: 96,
-    unique: true,
     nullable: false,
   })
   name: string;
@@ -30,7 +31,6 @@ export class Discipline {
   @Column({
     type: 'varchar',
     length: 12,
-    unique: true,
     nullable: false,
   })
   code: string;
@@ -40,6 +40,18 @@ export class Discipline {
     nullable: false,
   })
   ipCamera: string;
+
+  @Column({
+    type: 'time',
+    nullable: false,
+  })
+  startTime: string;
+
+  @Column({
+    type: 'time',
+    nullable: false,
+  })
+  endTime: string;
 
   @ManyToOne(() => Teacher, (teacher) => teacher.disciplines, {
     eager: true,

@@ -1,17 +1,19 @@
 POST http://localhost:8000/disciplines
 Content-Type: application/json
-Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiQWRsZXJAZW1haWwuY29tIiwidXNlclR5cGUiOiJwcm9mZXNzb3IiLCJpYXQiOjE3MzI1MDU4NjgsImV4cCI6MTczMjUwOTQ2OCwiYXVkIjoibG9jYWxob3N0OjgwMDAiLCJpc3MiOiJsb2NhbGhvc3Q6ODAwMCJ9.5e4ePQawMA5__CdjvnRep7FnTlkM5eP-L3kZIgDE4Hg
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzLCJlbWFpbCI6IkNsZWlkZUBlbWFpbC5jb20iLCJ1c2VyVHlwZSI6InByb2Zlc3NvciIsImlhdCI6MTczMzE1NTk4NCwiZXhwIjoxNzMzMTU5NTg0LCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.ZUZy4j7e6kVcORa0Z25hBB4hPibULM3XAemc7Pj2xi0
 {
-    "name" :"Sistemas Embarcados",
-    "code":"C6C872",
-    "ipCamera":"192.168.1.103"
+    "name" :"Arquitetura de Computadores I",
+    "code":"COM101",
+    "ipCamera":"192.168.1.103",
+    "startTime": "19:00",
+    "endTime": "20:40"
 }
 
-POST http://localhost:8000/disciplines/16/students
+POST http://localhost:8000/disciplines/27/students
 Content-Type: application/json
-Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiQWRsZXJAZW1haWwuY29tIiwidXNlclR5cGUiOiJwcm9mZXNzb3IiLCJpYXQiOjE3MzIzODkyMzYsImV4cCI6MTczMjM5MjgzNiwiYXVkIjoibG9jYWxob3N0OjgwMDAiLCJpc3MiOiJsb2NhbGhvc3Q6ODAwMCJ9.Arw8N1zkrjgHegSC0x2lN04w0_KTSHc9hFJBCjaw95c
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzLCJlbWFpbCI6IkNsZWlkZUBlbWFpbC5jb20iLCJ1c2VyVHlwZSI6InByb2Zlc3NvciIsImlhdCI6MTczMzE1NTk4NCwiZXhwIjoxNzMzMTU5NTg0LCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.ZUZy4j7e6kVcORa0Z25hBB4hPibULM3XAemc7Pj2xi0
 {
-    "studentsId": [1,2]
+    "studentsId": [17,18]
 }
 
 POST http://localhost:8000/disciplines/connect-camera

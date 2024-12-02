@@ -29,5 +29,5 @@ export class Class {
   discipline: Discipline;
 
   @ManyToMany(() => Student, (student) => student.classes, { eager: true })
-  presentStudents: Student[];
+  presentStudents?: Student[];
 }

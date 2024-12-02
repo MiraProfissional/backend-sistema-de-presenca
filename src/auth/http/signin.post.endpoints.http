@@ -2,14 +2,14 @@ POST http://localhost:8000/auth/sign-in
 Content-Type: application/json
 
 {
-    "email":"DaniloCanuto@email.com",
-    "password":"Prodessor@1"
+    "email":"Cleide@email.com",
+    "password":"Professor@1"
 }
 
 POST http://localhost:8000/auth/sign-in
 Content-Type: application/json
 
 {
-    "email":"Zang@email.com",
+    "email":"Mira@email.com",
     "password":"Alunos@1"
 }
